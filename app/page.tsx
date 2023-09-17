@@ -4,7 +4,7 @@ import { useState } from 'react'
 import ThemeSelector from '@/components/ThemeSelector';
 import DrawCanvas from '@/components/DrawCanvas';
 
-const page = () => {
+const Page = () => {
   const [theme, setTheme] = useState("dark");
 
   return (
@@ -21,4 +21,4 @@ const page = () => {
   )
 };
 
-export default page
+export default Page
