@@ -48,7 +48,7 @@ const DrawCanvas: React.FC<ThemeProps> = ({ theme }) => {
                 ref={canvasRef}
                 onMouseDown={onMouseDown}
             />
-            <div className='absolute top-2 right-2 hidden md:flex gap-2'>
+            <div className='absolute top-2 left-2 xl:right-2 xl:left-auto hidden md:flex gap-2'>
                 <div className='relative'>
                     <button
                         title='Color Picker'
