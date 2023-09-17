@@ -1,16 +1,15 @@
 "use client"
 
 import { useDraw } from "@/hooks/useDraw";
+import { useThemeStore } from "@/store";
 import { useState } from "react";
 import { ChromePicker } from "react-color";
 import { AiOutlineClear, AiOutlineClose } from "react-icons/ai";
 import { PiPaintBrushFill } from "react-icons/pi";
 
-interface ThemeProps {
-    theme: string;
-};
+const DrawCanvas = () => {
+    const { theme } = useThemeStore();
 
-const DrawCanvas: React.FC<ThemeProps> = ({ theme }) => {
     const [colorPicker, setColorPicker] = useState<boolean>(false);
     const [color, setColor] = useState<string>('#000');
 

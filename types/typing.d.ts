@@ -5,3 +5,8 @@ type Draw = {
 };
 
 type Point = { x: number, y: number };
+
+type ThemeState = {
+    theme: string,
+    setTheme: (theme: string) => void
+}
