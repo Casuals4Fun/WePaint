@@ -4,7 +4,7 @@ import ThemeSelector from '@/components/ThemeSelector';
 import DrawCanvas from '@/components/DrawCanvas';
 import { useThemeStore } from '@/store';
 
-const page = () => {
+const Home = () => {
   const { theme } = useThemeStore();
 
   return (
@@ -15,4 +15,4 @@ const page = () => {
   )
 };
 
-export default page
+export default Home
