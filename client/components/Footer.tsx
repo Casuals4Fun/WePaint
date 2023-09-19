@@ -8,8 +8,8 @@ const Footer = () => {
     const { theme } = useThemeStore();
 
     return (
-        <div className={`absolute bottom-5 left-5 right-5 ${theme === 'light' ? "text-black" : "text-white"} flex items-center justify-center md:justify-between gap-5 md:gap-0 h-[30px]`}>
-            <div className='text-[15px]'>
+        <div className={`absolute bottom-5 left-5 right-5 ${theme === 'light' ? "text-black" : "text-white"} flex items-center justify-center md:justify-between gap-3 md:gap-0 h-[30px]`}>
+            <div className='text-[15px] pr-1'>
                 <span>Made with ❤️ by </span>
                 <a href='https://shubhamlal.is-a.dev' className='underline' target='_blank'>
                     Shubham Lal

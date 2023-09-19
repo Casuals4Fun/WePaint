@@ -37,7 +37,7 @@ const SaveImage: React.FC<SaveImageProps> = ({ canvasRef }) => {
                                     className='w-full outline-none border rounded-md py-2 px-4 text-center'
                                     value={downloadCanvasWidth}
                                     onChange={e => setDownloadCanvasWidth(e.target.value)}
-                                    placeholder='Width (in pixels)'
+                                    placeholder='Width'
                                 />
                                 <span>px</span>
                             </div>
@@ -46,7 +46,7 @@ const SaveImage: React.FC<SaveImageProps> = ({ canvasRef }) => {
                                     className='w-full outline-none border rounded-md py-2 px-4 text-center'
                                     value={downloadCanvasHeight}
                                     onChange={e => setDownloadCanvasHeight(e.target.value)}
-                                    placeholder='Height (in pixels)'
+                                    placeholder='Height'
                                 />
                                 <span>px</span>
                             </div>

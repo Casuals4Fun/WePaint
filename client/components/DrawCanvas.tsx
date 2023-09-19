@@ -4,30 +4,31 @@ import { useDraw } from "@/hooks/useDraw";
 import { useThemeStore, useToolbarStore } from "@/store";
 import CanvasToolbar from "./CanvasToolbar";
 import SaveImage from "./SaveImage";
+import { io } from "socket.io-client";
+import { drawLine } from "@/utils/drawLine";
+import { useEffect } from "react";
+
+const socket = io(process.env.NEXT_PUBLIC_BACKEND_URL!);
 
 const DrawCanvas = () => {
     const { theme } = useThemeStore();
-    const { canvasBg, brushThickness, color, downloadSelect } = useToolbarStore();
-    const { canvasRef, onMouseDown, clear } = useDraw(drawLine);
+    const { canvasBg, setCanvasBg, brushThickness, color, downloadSelect } = useToolbarStore();
+    const { canvasRef, onMouseDown, clear } = useDraw(createLine);
 
-    function drawLine({ prevPoint, currPoint, ctx }: Draw) {
-        const { x: currX, y: currY } = currPoint;
-
-        const lineWidth = brushThickness;
-        const lineColor = color;
-
-        let startPoint = prevPoint ?? currPoint;
-        ctx.beginPath();
-        ctx.lineWidth = lineWidth;
-        ctx.strokeStyle = lineColor;
-        ctx.moveTo(startPoint.x, startPoint.y);
-        ctx.lineTo(currX, currY);
-        ctx.stroke();
-        ctx.fillStyle = lineColor;
-        ctx.beginPath();
-        ctx.arc(startPoint.x, startPoint.y, 2, 0, 2 * Math.PI);
-        ctx.fill();
+    function createLine({ prevPoint, currPoint, ctx }: Draw) {
+        socket.emit('draw-line', ({ prevPoint, currPoint, color, brushThickness }));
+        drawLine({ prevPoint, currPoint, ctx, color, brushThickness });
     };
+
+    useEffect(() => {
+        const ctx = canvasRef.current?.getContext('2d');
+
+        socket.on('draw-line', ({ prevPoint, currPoint, color, brushThickness }: DrawLineProps) => {
+            if (!ctx) return;
+
+            drawLine({ prevPoint, currPoint, ctx, color, brushThickness });
+        });
+    }, [canvasRef]);
 
     return (
         <div className='relative'>

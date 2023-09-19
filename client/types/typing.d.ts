@@ -1,10 +1,16 @@
+type Point = { x: number, y: number };
+
 type Draw = {
     ctx: CanvasRenderingContext2D,
     currPoint: Point,
     prevPoint: Point | null
 };
 
-type Point = { x: number, y: number };
+type DrawLineProps = Draw & {
+    color: string,
+    brushThickness: number,
+    canvasBg: string,
+};
 
 type ThemeState = {
     theme: string,
