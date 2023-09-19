@@ -1,7 +1,9 @@
 import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
+import dotenv from 'dotenv';
 
+dotenv.config();
 const app = express();
 const server = http.createServer(app);
 
@@ -30,6 +32,7 @@ app.get('/', async (req, res, next) => {
     }
 });
 
-server.listen(5000, () => {
-    console.log("Server listening on PORT 5000");
+const PORT = process.env.PORT;
+server.listen(PORT, () => {
+    console.log(`Server listening on PORT ${PORT}`);
 });
