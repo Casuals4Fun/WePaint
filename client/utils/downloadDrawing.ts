@@ -1,6 +1,6 @@
 import React from "react";
 
-export const downloadDrawing = (canvasRef: React.RefObject<HTMLCanvasElement>) => {
+export const downloadDrawing = (canvasRef: React.RefObject<HTMLCanvasElement>, canvasBg: string) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -11,7 +11,7 @@ export const downloadDrawing = (canvasRef: React.RefObject<HTMLCanvasElement>) =
     const tempCtx = tempCanvas.getContext('2d');
     if (!tempCtx) return;
 
-    tempCtx.fillStyle = '#ffffff';
+    tempCtx.fillStyle = canvasBg;
     tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
     tempCtx.drawImage(canvas, 0, 0);
 

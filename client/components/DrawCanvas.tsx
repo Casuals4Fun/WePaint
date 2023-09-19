@@ -6,13 +6,8 @@ import CanvasToolbar from "./CanvasToolbar";
 
 const DrawCanvas = () => {
     const { theme } = useThemeStore();
-    const { brushThickness, color } = useToolbarStore();
+    const { canvasBg, brushThickness, color } = useToolbarStore();
     const { canvasRef, onMouseDown, clear } = useDraw(drawLine);
-
-    // const [colorPicker, setColorPicker] = useState<boolean>(false);
-    // const [color, setColor] = useState<string>('#000');
-    // const [brushEdit, setBrushEdit] = useState<boolean>(false);
-    // const [brushThickness, setBrushThickness] = useState<number>(5);
 
     function drawLine({ prevPoint, currPoint, ctx }: Draw) {
         const { x: currX, y: currY } = currPoint;
@@ -41,14 +36,6 @@ const DrawCanvas = () => {
             </div>
 
             <CanvasToolbar
-                // colorPicker={colorPicker}
-                // setColorPicker={setColorPicker}
-                // color={color}
-                // setColor={setColor}
-                // brushEdit={brushEdit}
-                // setBrushEdit={setBrushEdit}
-                // brushThickness={brushThickness}
-                // setBrushThickness={setBrushThickness}
                 clear={clear}
                 canvasRef={canvasRef}
             />
@@ -56,9 +43,10 @@ const DrawCanvas = () => {
             <canvas
                 width={768}
                 height={750}
-                className={`border-x border-b border-gray-400 rounded-3xl bg-white hidden md:block cursor-crosshair`}
+                className={`border-x border-b border-gray-400 rounded-3xl hidden md:block cursor-crosshair`}
                 ref={canvasRef}
                 onMouseDown={onMouseDown}
+                style={{ background: canvasBg }}
             />
         </div>
     )

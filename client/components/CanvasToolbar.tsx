@@ -4,7 +4,7 @@ import React, { RefObject } from 'react'
 import { useToolbarStore } from '@/store'
 import { downloadDrawing } from '@/utils/downloadDrawing'
 import { ChromePicker } from 'react-color'
-import { AiOutlineClose, AiOutlineCloudDownload } from 'react-icons/ai'
+import { AiFillFormatPainter, AiOutlineClose, AiOutlineCloudDownload } from 'react-icons/ai'
 import { PiEraserFill, PiPaintBrushFill, PiPencil } from 'react-icons/pi'
 
 interface ToolbarProps {
@@ -13,7 +13,14 @@ interface ToolbarProps {
 };
 
 const CanvasToolbar = ({ clear, canvasRef }: ToolbarProps) => {
-    const { colorPicker, setColorPicker, color, setColor, brushEdit, setBrushEdit, brushThickness, setBrushThickness } = useToolbarStore();
+    const {
+        bgSelect, setBgSelect,
+        canvasBg, setCanvasBg,
+        colorPicker, setColorPicker,
+        color, setColor,
+        brushEdit, setBrushEdit,
+        brushThickness, setBrushThickness
+    } = useToolbarStore();
 
     return (
         <div className={`absolute top-0 left-0 right-0 hidden md:flex justify-between p-2 bg-gray-300 border-t border-x border-gray-400 rounded-t-3xl`}>
@@ -30,6 +37,22 @@ const CanvasToolbar = ({ clear, canvasRef }: ToolbarProps) => {
                         <ChromePicker
                             color={color}
                             onChange={e => setColor(e.hex)}
+                            className='absolute top-10 left-0'
+                        />
+                    )}
+                </div>
+                <div className='relative'>
+                    <button
+                        title='Background'
+                        onClick={() => setBgSelect(!bgSelect)}
+                        className={`bg-white hover:text-gray-700 duration-200 rounded-full p-2`}
+                    >
+                        {bgSelect ? <AiOutlineClose size={22} /> : <AiFillFormatPainter size={22} />}
+                    </button>
+                    {bgSelect && (
+                        <ChromePicker
+                            color={canvasBg}
+                            onChange={e => setCanvasBg(e.hex)}
                             className='absolute top-10 left-0'
                         />
                     )}
@@ -76,7 +99,7 @@ const CanvasToolbar = ({ clear, canvasRef }: ToolbarProps) => {
                 </button>
                 <button
                     title='Download'
-                    onClick={() => downloadDrawing(canvasRef)}
+                    onClick={() => downloadDrawing(canvasRef, canvasBg)}
                     className='bg-white hover:text-gray-700 duration-200 rounded-full p-2'
                 >
                     <AiOutlineCloudDownload size={22} />

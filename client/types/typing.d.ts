@@ -12,6 +12,10 @@ type ThemeState = {
 }
 
 type ToolbarState = {
+    bgSelect: boolean, 
+    setBgSelect: Dispatch<SetStateAction<boolean>>,
+    canvasBg: string,
+    setCanvasBg: Dispatch<SetStateAction<string>>, 
     colorPicker: boolean, 
     setColorPicker: Dispatch<SetStateAction<boolean>>,
     color: string,
