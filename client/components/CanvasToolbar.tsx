@@ -4,8 +4,9 @@ import React, { RefObject } from 'react'
 import { useToolbarStore } from '@/store'
 import { downloadDrawing } from '@/utils/downloadDrawing'
 import { ChromePicker } from 'react-color'
-import { AiFillFormatPainter, AiOutlineClose, AiOutlineCloudDownload } from 'react-icons/ai'
+import { AiOutlineClose, AiOutlineCloudDownload } from 'react-icons/ai'
 import { PiEraserFill, PiPaintBrushFill, PiPencil } from 'react-icons/pi'
+import { GrPaint } from 'react-icons/gr'
 
 interface ToolbarProps {
     clear: () => void,
@@ -19,7 +20,8 @@ const CanvasToolbar = ({ clear, canvasRef }: ToolbarProps) => {
         colorPicker, setColorPicker,
         color, setColor,
         brushEdit, setBrushEdit,
-        brushThickness, setBrushThickness
+        brushThickness, setBrushThickness,
+        downloadSelect, setDownloadSelect
     } = useToolbarStore();
 
     return (
@@ -47,7 +49,7 @@ const CanvasToolbar = ({ clear, canvasRef }: ToolbarProps) => {
                         onClick={() => setBgSelect(!bgSelect)}
                         className={`bg-white hover:text-gray-700 duration-200 rounded-full p-2`}
                     >
-                        {bgSelect ? <AiOutlineClose size={22} /> : <AiFillFormatPainter size={22} />}
+                        {bgSelect ? <AiOutlineClose size={22} /> : <GrPaint size={22} />}
                     </button>
                     {bgSelect && (
                         <ChromePicker
@@ -66,7 +68,7 @@ const CanvasToolbar = ({ clear, canvasRef }: ToolbarProps) => {
                         {brushEdit ? <AiOutlineClose size={22} /> : <PiPencil size={22} />}
                     </button>
                     {brushEdit && (
-                        <div className="w-[179px] absolute top-10 left-0 bg-white pt-2 px-2 border flex flex-col gap-5">
+                        <div className="w-[179px] absolute top-10 left-0 bg-white pt-2 px-2 border rounded flex flex-col gap-5">
                             <div className="flex gap-2">
                                 <div className="flex items-center justify-center gap-1">
                                     <input
@@ -98,8 +100,8 @@ const CanvasToolbar = ({ clear, canvasRef }: ToolbarProps) => {
                     <PiEraserFill size={22} />
                 </button>
                 <button
-                    title='Download'
-                    onClick={() => downloadDrawing(canvasRef, canvasBg)}
+                    title='Save Drawing'
+                    onClick={() => setDownloadSelect(!downloadSelect)}
                     className='bg-white hover:text-gray-700 duration-200 rounded-full p-2'
                 >
                     <AiOutlineCloudDownload size={22} />

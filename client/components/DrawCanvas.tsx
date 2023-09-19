@@ -3,10 +3,11 @@
 import { useDraw } from "@/hooks/useDraw";
 import { useThemeStore, useToolbarStore } from "@/store";
 import CanvasToolbar from "./CanvasToolbar";
+import SaveImage from "./SaveImage";
 
 const DrawCanvas = () => {
     const { theme } = useThemeStore();
-    const { canvasBg, brushThickness, color } = useToolbarStore();
+    const { canvasBg, brushThickness, color, downloadSelect } = useToolbarStore();
     const { canvasRef, onMouseDown, clear } = useDraw(drawLine);
 
     function drawLine({ prevPoint, currPoint, ctx }: Draw) {
@@ -48,6 +49,8 @@ const DrawCanvas = () => {
                 onMouseDown={onMouseDown}
                 style={{ background: canvasBg }}
             />
+
+            {downloadSelect && <SaveImage canvasRef={canvasRef} />}
         </div>
     )
 }

@@ -17,5 +17,15 @@ export const useToolbarStore = create<ToolbarState>((set) => ({
     brushEdit: false,
     setBrushEdit: (brushEdit: boolean) => set({ brushEdit: brushEdit }),
     brushThickness: 5,
-    setBrushThickness: (brushThickness: number) => set({ brushThickness: brushThickness })
+    setBrushThickness: (brushThickness: number) => set({ brushThickness: brushThickness }),
+    downloadSelect: false,
+    setDownloadSelect: (downloadSelect: boolean) => set({ downloadSelect: downloadSelect }),
+    downloadCanvasWidth: 750,
+    setDownloadCanvasWidth: (downloadCanvasWidth: number) => set({ downloadCanvasWidth: downloadCanvasWidth }),
+    downloadCanvasHeight: 750,
+    setDownloadCanvasHeight: (downloadCanvasHeight: number) => set({ downloadCanvasHeight: downloadCanvasHeight }),
+    openCanvasBg: false,
+    setOpenCanvasBg: (openCanvasBg: boolean) => set({ openCanvasBg: openCanvasBg }),
+    downloadCanvasBg: '#fff',
+    setDownloadCanvasBg: (downloadCanvasBg: string) => set({ downloadCanvasBg: downloadCanvasBg }),
 }));
