@@ -12,7 +12,7 @@ const io = new Server(server, {
 });
 
 io.on('connection', socket => {
-    socket.on('draw-line', ({ prevPoint, currPoint, color, brushThickness }: DrawLine) => {
+    socket.on('draw-line', ({ prevPoint, currPoint, color, brushThickness }) => {
         socket.broadcast.emit('draw-line', {
             prevPoint, currPoint, color, brushThickness
         });
@@ -33,11 +33,3 @@ app.get('/', async (req, res, next) => {
 server.listen(5000, () => {
     console.log("Server listening on PORT 5000");
 });
-
-type Point = { x: number, y: number };
-type DrawLine = {
-    prevPoint: Point | null,
-    currPoint: Point,
-    color: string,
-    brushThickness: number
-};
