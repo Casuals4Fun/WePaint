@@ -69,8 +69,11 @@ export const useDraw = (onDraw: ({ ctx, currPoint, prevPoint }: Draw) => void) =
             if (!canvas) return null;
 
             const rect = canvas.getBoundingClientRect();
-            const x = clientX - rect.left;
-            const y = clientY - rect.top;
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+
+            const x = (clientX - rect.left) * scaleX;
+            const y = (clientY - rect.top) * scaleY;
 
             return { x, y };
         };
@@ -91,6 +94,28 @@ export const useDraw = (onDraw: ({ ctx, currPoint, prevPoint }: Draw) => void) =
             window.removeEventListener('touchend', handleEnd);
         }
     }, [onDraw]);
+
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        if (canvas) {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+        }
+
+        const handleResize = () => {
+            const canvas = canvasRef.current;
+            if (canvas) {
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     return { canvasRef, onMouseDown, clear };
 };

@@ -38,9 +38,7 @@ const DrawCanvas = () => {
             />
 
             <canvas
-                width={768}
-                height={750}
-                className={`border-x border-b border-gray-400 rounded-3xl cursor-crosshair`}
+                className={`border-x border-b border-gray-400 md:rounded-3xl cursor-crosshair w-screen h-[calc(100vh-110px)] md:w-[768px] md:h-[750px]`}
                 ref={canvasRef}
                 onMouseDown={onMouseDown}
                 onTouchStart={onMouseDown}

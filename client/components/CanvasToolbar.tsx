@@ -25,7 +25,7 @@ const CanvasToolbar = ({ clear, canvasRef }: ToolbarProps) => {
     } = useToolbarStore();
 
     return (
-        <div className={`absolute top-0 left-0 right-0 hidden md:flex justify-between p-2 bg-gray-300 border-t border-x border-gray-400 rounded-t-3xl`}>
+        <div className={`absolute top-0 left-0 right-0 flex justify-between p-2 bg-gray-300 border-t border-x border-gray-400 md:rounded-t-3xl`}>
             <div className="flex gap-2">
                 <div className='relative'>
                     <button

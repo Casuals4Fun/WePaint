@@ -8,7 +8,7 @@ const Navbar = () => {
     const { theme, setTheme } = useThemeStore();
 
     return (
-        <div className='absolute top-5 left-5 right-5 flex justify-between'>
+        <div className='w-full pt-2 px-2 md:pt-5 md:px-5 flex items-center md:items-start justify-between'>
             <div className={`text-[50px] font-extralight ${theme === "light" ? "text-black" : "text-white"}`}>
                 <MdOutlineDraw />
             </div>
