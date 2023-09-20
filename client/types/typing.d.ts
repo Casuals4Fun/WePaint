@@ -41,3 +41,8 @@ type ToolbarState = {
     downloadCanvasBg: string,
     setDownloadCanvasBg: Dispatch<SetStateAction<string>>
 };
+
+type SocketState = {
+    connected: boolean,
+    setConnected: Dispatch<SetStateAction<boolean>>
+}

@@ -29,3 +29,8 @@ export const useToolbarStore = create<ToolbarState>((set) => ({
     downloadCanvasBg: '#fff',
     setDownloadCanvasBg: (downloadCanvasBg: string) => set({ downloadCanvasBg: downloadCanvasBg }),
 }));
+
+export const useSocketStore = create<SocketState>((set) => ({
+    connected: false,
+    setConnected: (connected: boolean) => set({ connected: connected })
+}));

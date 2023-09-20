@@ -1,20 +1,20 @@
 "use client"
 
 import { useDraw } from "@/hooks/useDraw";
-import { useThemeStore, useToolbarStore } from "@/store";
+import { useSocketStore, useThemeStore, useToolbarStore } from "@/store";
 import CanvasToolbar from "./CanvasToolbar";
 import SaveImage from "./SaveImage";
-import { io } from "socket.io-client";
 import { drawLine } from "@/utils/drawLine";
 import { useEffect } from "react";
-
-const socket = io(process.env.NEXT_PUBLIC_BACKEND_URL!);
+import { connectSocket } from "@/utils/connectSocket";
 
 const DrawCanvas = () => {
     const { theme } = useThemeStore();
-    const { canvasBg, setCanvasBg, brushThickness, color, downloadSelect } = useToolbarStore();
-    const { canvasRef, onMouseDown, clear } = useDraw(createLine);
+    const { canvasBg, brushThickness, color, downloadSelect } = useToolbarStore();
+    const { setConnected } = useSocketStore();
+    const socket = connectSocket(setConnected);
 
+    const { canvasRef, onMouseDown, clear } = useDraw(createLine);
     function createLine({ prevPoint, currPoint, ctx }: Draw) {
         socket.emit('draw-line', ({ prevPoint, currPoint, color, brushThickness }));
         drawLine({ prevPoint, currPoint, ctx, color, brushThickness });
