@@ -18,10 +18,22 @@ export const useDraw = (onDraw: ({ ctx, currPoint, prevPoint }: Draw) => void) =
     };
 
     useEffect(() => {
-        const handleMouseMove = (e: MouseEvent) => {
+        const handleMove = (e: MouseEvent | TouchEvent) => {
             if (!mouseDown) return;
 
-            const currentPoint = computePointInCanvas(e);
+            let clientX, clientY;
+
+            if (e instanceof MouseEvent) {
+                clientX = e.clientX;
+                clientY = e.clientY;
+            } else if (typeof TouchEvent !== 'undefined' && e instanceof TouchEvent) {
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+            } else {
+                return;
+            }
+
+            const currentPoint = computePointInCanvas(clientX, clientY);
 
             const ctx = canvasRef.current?.getContext('2d');
             if (!ctx || !currentPoint) return;
@@ -30,28 +42,53 @@ export const useDraw = (onDraw: ({ ctx, currPoint, prevPoint }: Draw) => void) =
             prevPoint.current = currentPoint;
         };
 
-        const computePointInCanvas = (e: MouseEvent) => {
-            const canvas = canvasRef.current;
-            if (!canvas) return;
+        const handleStart = (e: MouseEvent | TouchEvent) => {
+            setMouseDown(true);
 
-            const rect = canvas.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+            let clientX, clientY;
+            if (e instanceof MouseEvent) {
+                clientX = e.clientX;
+                clientY = e.clientY;
+            } else if (typeof TouchEvent !== 'undefined' && e instanceof TouchEvent) {
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+            } else {
+                return;
+            }
 
-            return { x, y };
+            prevPoint.current = computePointInCanvas(clientX, clientY);
         };
 
-        const handleMouseUp = () => {
+        const handleEnd = () => {
             setMouseDown(false);
             prevPoint.current = null;
         };
 
-        canvasRef.current?.addEventListener('mousemove', handleMouseMove);
-        window.addEventListener('mouseup', handleMouseUp);
+        const computePointInCanvas = (clientX: number, clientY: number) => {
+            const canvas = canvasRef.current;
+            if (!canvas) return null;
+
+            const rect = canvas.getBoundingClientRect();
+            const x = clientX - rect.left;
+            const y = clientY - rect.top;
+
+            return { x, y };
+        };
+
+        canvasRef.current?.addEventListener('mousemove', handleMove);
+        canvasRef.current?.addEventListener('touchmove', handleMove);
+        canvasRef.current?.addEventListener('mousedown', handleStart);
+        canvasRef.current?.addEventListener('touchstart', handleStart);
+        window.addEventListener('mouseup', handleEnd);
+        window.addEventListener('touchend', handleEnd);
 
         return () => {
-            canvasRef.current?.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('mouseup', handleMouseUp);
+            canvasRef.current?.removeEventListener('mousemove', handleMove);
+            canvasRef.current?.removeEventListener('touchmove', handleMove);
+            canvasRef.current?.removeEventListener('mousedown', handleStart);
+            canvasRef.current?.removeEventListener('touchstart', handleStart);
+            window.removeEventListener('mouseup', handleEnd);
+            window.removeEventListener('touchend', handleEnd);
         }
     }, [onDraw]);
 

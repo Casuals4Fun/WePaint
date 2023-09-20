@@ -32,11 +32,6 @@ const DrawCanvas = () => {
 
     return (
         <div className='relative'>
-            <div className={`md:hidden ${theme === "light" ? "text-black" : "text-white"}`}>
-                <p className='text-center'>Open on your Desktop</p>
-                <p className='text-center'>for best experience!</p>
-            </div>
-
             <CanvasToolbar
                 clear={clear}
                 canvasRef={canvasRef}
@@ -45,9 +40,10 @@ const DrawCanvas = () => {
             <canvas
                 width={768}
                 height={750}
-                className={`border-x border-b border-gray-400 rounded-3xl hidden md:block cursor-crosshair`}
+                className={`border-x border-b border-gray-400 rounded-3xl cursor-crosshair`}
                 ref={canvasRef}
                 onMouseDown={onMouseDown}
+                onTouchStart={onMouseDown}
                 style={{ background: canvasBg }}
             />
 
