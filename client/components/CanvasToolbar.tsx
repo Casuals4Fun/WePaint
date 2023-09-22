@@ -1,12 +1,12 @@
 "use client"
 
-import React, { RefObject } from 'react'
-import { useToolbarStore } from '@/store'
-import { downloadDrawing } from '@/utils/downloadDrawing'
-import { ChromePicker } from 'react-color'
+import React, { RefObject, useEffect } from 'react'
+import { useSocketStore, useToolbarStore } from '@/store'
+import { ChromePicker, ColorResult } from 'react-color'
 import { AiOutlineClose, AiOutlineCloudDownload } from 'react-icons/ai'
 import { PiEraserFill, PiPaintBrushFill, PiPencil } from 'react-icons/pi'
 import { GrPaint } from 'react-icons/gr'
+import { connectSocket } from "@/utils/connectSocket";
 
 interface ToolbarProps {
     clear: () => void,
@@ -14,6 +14,9 @@ interface ToolbarProps {
 };
 
 const CanvasToolbar = ({ clear, canvasRef }: ToolbarProps) => {
+    const { setConnected } = useSocketStore();
+    const socket = connectSocket(setConnected);
+
     const {
         bgSelect, setBgSelect,
         canvasBg, setCanvasBg,
@@ -23,6 +26,17 @@ const CanvasToolbar = ({ clear, canvasRef }: ToolbarProps) => {
         brushThickness, setBrushThickness,
         downloadSelect, setDownloadSelect
     } = useToolbarStore();
+
+    const handleCanvasBg = (e: ColorResult) => {
+        setCanvasBg(e.hex);
+        socket.emit('background', { canvasBg: e.hex });
+    };
+
+    useEffect(() => {
+        socket.on('background', ({ canvasBg }) => {
+            setCanvasBg(canvasBg);
+        });
+    }, [canvasRef]);
 
     return (
         <div className={`absolute top-0 left-0 right-0 flex justify-between p-2 bg-gray-300 border-t border-x border-gray-400 md:rounded-t-3xl`}>
@@ -54,7 +68,7 @@ const CanvasToolbar = ({ clear, canvasRef }: ToolbarProps) => {
                     {bgSelect && (
                         <ChromePicker
                             color={canvasBg}
-                            onChange={e => setCanvasBg(e.hex)}
+                            onChange={e => handleCanvasBg(e)}
                             className='absolute top-10 left-0'
                         />
                     )}

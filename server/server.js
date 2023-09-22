@@ -19,6 +19,12 @@ io.on('connection', socket => {
             prevPoint, currPoint, color, brushThickness
         });
     });
+
+    socket.on('background', ({ canvasBg }) => {
+        socket.broadcast.emit('background', { canvasBg });
+    });
+
+    socket.on('clear', () => io.emit('clear'));
 });
 
 app.get('/', async (req, res, next) => {

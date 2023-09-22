@@ -9,7 +9,6 @@ import { useEffect } from "react";
 import { connectSocket } from "@/utils/connectSocket";
 
 const DrawCanvas = () => {
-    const { theme } = useThemeStore();
     const { canvasBg, brushThickness, color, downloadSelect } = useToolbarStore();
     const { setConnected } = useSocketStore();
     const socket = connectSocket(setConnected);
@@ -28,12 +27,14 @@ const DrawCanvas = () => {
 
             drawLine({ prevPoint, currPoint, ctx, color, brushThickness });
         });
+
+        socket.on('clear', clear);
     }, [canvasRef]);
 
     return (
         <div className='relative'>
             <CanvasToolbar
-                clear={clear}
+                clear={() => socket.emit('clear')}
                 canvasRef={canvasRef}
             />
 

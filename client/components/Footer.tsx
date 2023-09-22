@@ -17,12 +17,12 @@ const Footer = () => {
                 </a>
             </div>
             <div className='w-[1px] h-[30px] bg-white md:hidden' />
-            <div className='hidden md:flex items-center justify-center gap-3 w-1/3'>
+            <div className='hidden md:flex items-center justify-center gap-2 w-1/3'>
                 <span className="flex items-center justify-center">
                     {connected ? (
-                        <div className='animate-ping absolute inline-flex h-5 w-5 rounded-full bg-green-400 opacity-75' />
+                        <div className='animate-ping absolute inline-flex h-3 w-3 rounded-full bg-green-400 opacity-75' />
                     ) : null}
-                    <div className={`relative inline-flex rounded-full h-3 w-3 ${connected ? "bg-green-500" : "bg-gray-500"}`} />
+                    <div className={`relative inline-flex rounded-full h-2 w-2 ${connected ? "bg-green-500" : "bg-gray-500"}`} />
                 </span>
                 <span>
                     {connected ? 'Server Online' : 'Server Offline'}
