@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'PvP Draw',
-  description: 'An awesome designed multiplayer drawing application for Player vs Player interaction',
+  description: 'An awesome designed multiplayer drawing application for multiplayer Player interaction',
 }
 
 export default function RootLayout({
