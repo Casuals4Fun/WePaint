@@ -1,12 +1,12 @@
 "use client"
 
-import React, { RefObject, useEffect } from 'react'
-import { useSocketStore, useToolbarStore } from '@/store'
-import { ChromePicker, ColorResult } from 'react-color'
-import { AiOutlineClose, AiOutlineCloudDownload } from 'react-icons/ai'
-import { PiEraserFill, PiPaintBrushFill, PiPencil } from 'react-icons/pi'
-import { GrPaint } from 'react-icons/gr'
-import { connectSocket } from "@/utils/connectSocket";
+import React, { RefObject, useEffect } from 'react';
+import { useSocketStore, useToolbarStore } from '@/store';
+import { ChromePicker, ColorResult } from 'react-color';
+import { AiOutlineClose, AiOutlineCloudDownload } from 'react-icons/ai';
+import { PiEraserFill, PiPaintBrushFill, PiPencil } from 'react-icons/pi';
+import { GrPaint } from 'react-icons/gr';
+import { connectSocket } from '@/utils/connectSocket';
 
 interface ToolbarProps {
     clear: () => void,

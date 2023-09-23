@@ -1,5 +1,6 @@
 "use client"
 
+import React from 'react';
 import { useThemeStore } from '@/store';
 import { MdOutlineDraw } from 'react-icons/md';
 import { FiMoon, FiSun } from 'react-icons/fi';

@@ -1,8 +1,8 @@
 "use client"
 
-import { useToolbarStore } from '@/store'
+import React, { RefObject } from 'react';
+import { useToolbarStore } from '@/store';
 import { downloadDrawing } from '@/utils/downloadDrawing';
-import React, { RefObject } from 'react'
 import { ChromePicker } from 'react-color';
 
 interface SaveImageProps {

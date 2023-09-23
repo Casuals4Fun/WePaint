@@ -1,7 +1,7 @@
 "use client"
 
-import { useSocketStore, useThemeStore } from '@/store'
-import React from 'react'
+import React from 'react';
+import { useSocketStore, useThemeStore } from '@/store';
 import { AiFillGithub, AiFillLinkedin } from 'react-icons/ai';
 
 const Footer = () => {
