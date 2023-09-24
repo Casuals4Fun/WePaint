@@ -34,3 +34,10 @@ export const useSocketStore = create<SocketState>((set) => ({
     connected: false,
     setConnected: (connected: boolean) => set({ connected: connected })
 }));
+
+export const useInviteStore = create<InviteState>((set) => ({
+    invite: false,
+    setInvite: (invite: boolean) => set({ invite: invite }),
+    preference: "",
+    setPreference: (preference: string) => set({ preference: preference })
+}));

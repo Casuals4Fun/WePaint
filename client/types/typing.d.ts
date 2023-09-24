@@ -46,3 +46,10 @@ type SocketState = {
     connected: boolean,
     setConnected: Dispatch<SetStateAction<boolean>>
 }
+
+type InviteState = {
+    invite: boolean,
+    setInvite: Dispatch<SetStateAction<boolean>>,
+    preference: string, 
+    setPreference: Dispatch<SetStateAction<string>>
+};
