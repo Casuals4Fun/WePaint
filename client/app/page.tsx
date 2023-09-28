@@ -8,18 +8,18 @@ import useWindowHeight from '@/utils/useWindowHeight';
 
 const Home = () => {
   const { theme } = useThemeStore();
-  const { height, isReady } = useWindowHeight();
+  const { height, canvasHeight, isReady } = useWindowHeight();
 
   return (
-    <div className={`relative w-screen flex flex-col items-center justify-between ${theme === "light" ? "bg-white" : "bg-black"}`}
+    <div className={`overflow-y-hidden relative w-screen flex flex-col items-center justify-between ${theme === "light" ? "bg-white" : "bg-black"}`}
       style={{
-        minHeight: `${height}px`,
+        height: `${height}px`,
         opacity: isReady ? 1 : 0,
         transition: 'opacity 0.5s linear'
       }}
     >
       <Navbar />
-      <DrawCanvas />
+      <DrawCanvas canvasHeight={canvasHeight} />
       <Footer />
     </div>
   )

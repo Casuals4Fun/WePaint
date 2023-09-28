@@ -8,7 +8,11 @@ import SaveImage from './SaveImage';
 import { drawLine } from '@/utils/drawLine';
 import { connectSocket } from '@/utils/connectSocket';
 
-const DrawCanvas = () => {
+interface HeightProp {
+    canvasHeight: Number
+}
+
+const DrawCanvas = ({ canvasHeight }: HeightProp) => {
     const { canvasBg, brushThickness, color, downloadSelect } = useToolbarStore();
     const { setConnected } = useSocketStore();
     const socket = connectSocket(setConnected);
@@ -62,7 +66,8 @@ const DrawCanvas = () => {
             />
 
             <canvas
-                className={`border-x border-b border-gray-400 md:rounded-3xl cursor-crosshair w-screen h-[calc(100vh-110px)] md:w-[768px] md:h-[750px]`}
+                className={`border-x border-b border-gray-400 md:rounded-3xl cursor-crosshair w-screen md:w-[768px] md:h-[750px]`}
+                height={`${canvasHeight}px`}
                 ref={canvasRef}
                 onMouseDown={onMouseDown}
                 onTouchStart={onMouseDown}
