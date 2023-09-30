@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useInviteStore } from '@/store';
 import { IoIosArrowBack } from 'react-icons/io';
 import { AiOutlineClose } from 'react-icons/ai';
@@ -9,6 +9,11 @@ import { GoPeople } from 'react-icons/go';
 
 const Invite = () => {
     const { invite, setInvite, preference, setPreference } = useInviteStore();
+    const [showClose, setShowClose] = useState(true);
+
+    useEffect(() => {
+        if (location.pathname === "/room") setShowClose(false);
+    }, [location.pathname]);
 
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50">
@@ -22,12 +27,14 @@ const Invite = () => {
                         <IoIosArrowBack />
                     </button>
                 )}
-                <button
-                    className='absolute right-0 top-0 w-[30px] h-[30px] bg-gray-100 hover:bg-black text-black hover:text-white duration-200 flex items-center justify-center'
-                    onClick={() => setInvite(!invite)}
-                >
-                    <AiOutlineClose />
-                </button>
+                {showClose && (
+                    <button
+                        className='absolute right-0 top-0 w-[30px] h-[30px] bg-gray-100 hover:bg-black text-black hover:text-white duration-200 flex items-center justify-center'
+                        onClick={() => setInvite(!invite)}
+                    >
+                        <AiOutlineClose />
+                    </button>
+                )}
                 <div className="p-5">
                     {preference === "" ? (
                         <PreferenceSelector />
