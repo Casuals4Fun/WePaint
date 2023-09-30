@@ -3,10 +3,13 @@
 import React from 'react';
 import { useSocketStore, useThemeStore } from '@/store';
 import { AiFillGithub, AiFillLinkedin } from 'react-icons/ai';
+import { connectSocket } from '@/utils/connectSocket';
 
 const Footer = () => {
     const { theme } = useThemeStore();
-    const { connected } = useSocketStore();
+    const { connected, setConnected } = useSocketStore();
+
+    connectSocket(setConnected);
 
     return (
         <footer className={`w-full pt-1 pb-1 md:pt-0 md:pb-5 md:px-5 flex items-center md:items-end justify-center md:justify-between gap-3 md:gap-0 ${theme === 'light' ? "text-black" : "text-white"}`}>

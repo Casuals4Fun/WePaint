@@ -3,10 +3,10 @@
 import React, { useEffect } from 'react';
 import { useDraw } from '@/hooks/useDraw';
 import { useSocketStore, useToolbarStore } from '@/store';
-import CanvasToolbar from './CanvasToolbar';
 import SaveImage from './SaveImage';
 import { drawLine } from '@/utils/drawLine';
 import { connectSocket } from '@/utils/connectSocket';
+import RoomToolbar from './RoomToolbar';
 
 interface HeightProp {
     canvasHeight: Number
@@ -56,13 +56,12 @@ const RoomCanvas = ({ canvasHeight }: HeightProp) => {
             socket.off('draw-line');
             socket.off('clear');
         }
-    }, [canvasRef]);
+    }, [canvasRef, socket, clear]);
 
     return (
         <div className='relative'>
-            <CanvasToolbar
+            <RoomToolbar
                 clear={() => socket.emit('clear')}
-                canvasRef={canvasRef}
             />
 
             <canvas

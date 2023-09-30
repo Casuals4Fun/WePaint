@@ -13,7 +13,7 @@ const Room = () => {
 
     useEffect(() => {
         setInvite(true);
-    }, []);
+    }, [setInvite]);
 
     return (
         <div className={`overflow-y-hidden relative w-screen flex flex-col items-center justify-between ${theme === "light" ? "bg-white" : "bg-black"}`}

@@ -13,7 +13,7 @@ const Invite = () => {
 
     useEffect(() => {
         if (location.pathname === "/room") setShowClose(false);
-    }, [location.pathname]);
+    }, []);
 
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50">
