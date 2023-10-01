@@ -39,5 +39,7 @@ export const useInviteStore = create<InviteState>((set) => ({
     invite: false,
     setInvite: (invite: boolean) => set({ invite: invite }),
     preference: "",
-    setPreference: (preference: string) => set({ preference: preference })
+    setPreference: (preference: string) => set({ preference: preference }),
+    roomID: "",
+    setRoomID: (roomID: string) => set({ roomID: roomID })
 }));

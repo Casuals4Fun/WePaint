@@ -51,5 +51,7 @@ type InviteState = {
     invite: boolean,
     setInvite: Dispatch<SetStateAction<boolean>>,
     preference: string, 
-    setPreference: Dispatch<SetStateAction<string>>
+    setPreference: Dispatch<SetStateAction<string>>,
+    roomID: string, 
+    setRoomID: Dispatch<SetStateAction<string>>
 };

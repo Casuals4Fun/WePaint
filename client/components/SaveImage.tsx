@@ -21,20 +21,20 @@ const SaveImage: React.FC<SaveImageProps> = ({ canvasRef }) => {
 
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50">
-            <div className="bg-gray-100 opacity-70 fixed inset-0 z-40"></div>
+            <div className="bg-black opacity-70 fixed inset-0 z-40"></div>
             <div className="bg-white w-[95%] md:w-[500px] mx-auto rounded-lg shadow-lg overflow-hidden z-50">
                 <div className='w-full flex items-center justify-between pt-4 px-4 pb-2'>
-                    <p className='text-[20px] font-semibold'>Download Options</p>
+                    <p className='text-[20px] font-semibold'>Customize</p>
                 </div>
                 <div>
-                    <div className='flex items-center p-4'>
+                    <div className='flex items-center px-4 pb-2 pt-4'>
                         <div className='w-1/2'>
                             Dimensions
                         </div>
                         <div className='w-1/2 flex gap-3'>
                             <div className='w-1/2 flex items-center gap-1'>
                                 <input
-                                    className='w-full outline-none border rounded-md py-2 px-4 text-center'
+                                    className='w-full outline-none border rounded-md py-2 px-1 md:px-4 text-center'
                                     value={downloadCanvasWidth}
                                     onChange={e => setDownloadCanvasWidth(e.target.value)}
                                     placeholder='Width'
@@ -43,7 +43,7 @@ const SaveImage: React.FC<SaveImageProps> = ({ canvasRef }) => {
                             </div>
                             <div className='w-1/2 flex items-center gap-1'>
                                 <input
-                                    className='w-full outline-none border rounded-md py-2 px-4 text-center'
+                                    className='w-full outline-none border rounded-md py-2 px-1 md:px-4 text-center'
                                     value={downloadCanvasHeight}
                                     onChange={e => setDownloadCanvasHeight(e.target.value)}
                                     placeholder='Height'
@@ -52,7 +52,7 @@ const SaveImage: React.FC<SaveImageProps> = ({ canvasRef }) => {
                             </div>
                         </div>
                     </div>
-                    <div className='p-4'>
+                    <div className='px-4 pt-2 pb-4'>
                         <div className='flex items-center justify-between '>
                             <div>
                                 Background

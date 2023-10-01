@@ -1,16 +1,17 @@
 "use client"
 
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation'
 import { useInviteStore } from '@/store';
 import { IoIosArrowBack } from 'react-icons/io';
 import { AiOutlineClose } from 'react-icons/ai';
 import { GrAdd } from 'react-icons/gr';
 import { GoPeople } from 'react-icons/go';
 import { BsFillClipboardFill } from 'react-icons/bs';
-import { useParams } from 'next/navigation';
+import { toast } from 'react-hot-toast';
 
 const Invite = () => {
-    const { invite, setInvite, preference, setPreference } = useInviteStore();
+    const { invite, setInvite, preference, setPreference, roomID } = useInviteStore();
     const [showClose, setShowClose] = useState(true);
 
     useEffect(() => {
@@ -19,12 +20,15 @@ const Invite = () => {
 
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50">
-            <div className="bg-gray-100 opacity-70 fixed inset-0 z-40"></div>
+            <div className="bg-black opacity-70 fixed inset-0 z-40"></div>
             <div className="bg-white w-[95%] md:w-[500px] h-[214px] mx-auto rounded-lg shadow-lg overflow-hidden z-50 relative">
                 {(preference !== "Share" && preference !== "") && (
                     <button
                         className='absolute left-0 top-0 w-[30px] h-[30px] bg-gray-100 hover:bg-black text-black hover:text-white duration-200 flex items-center justify-center'
-                        onClick={() => setPreference("")}
+                        onClick={() => {
+                            if (roomID) return setPreference("Share");
+                            setPreference("");
+                        }}
                     >
                         <IoIosArrowBack />
                     </button>
@@ -57,14 +61,14 @@ const PreferenceSelector = () => {
     const { setPreference } = useInviteStore();
 
     return (
-        <>
-            <p className='text-[20px] text-center mb-4'>
+        <div className='h-full flex flex-col justify-between'>
+            <p className='text-[20px] text-center'>
                 Select your preference
             </p>
             <div className='flex items-center justify-center gap-20'>
                 <div className='flex flex-col items-center gap-1'>
                     <div
-                        className='w-[100px] h-[100px] bg-gray-100 rounded-full hover:border cursor-pointer flex items-center justify-center'
+                        className='w-[95px] h-[95px] bg-gray-100 rounded-full hover:border cursor-pointer flex items-center justify-center'
                         onClick={() => setPreference("Create")}
                     >
                         <GrAdd size={30} />
@@ -75,7 +79,7 @@ const PreferenceSelector = () => {
                 </div>
                 <div className='flex flex-col items-center gap-1'>
                     <div
-                        className='w-[100px] h-[100px] bg-gray-100 rounded-full hover:border cursor-pointer flex items-center justify-center'
+                        className='w-[95px] h-[95px] bg-gray-100 rounded-full hover:border cursor-pointer flex items-center justify-center'
                         onClick={() => setPreference("Join")}
                     >
                         <GoPeople size={30} />
@@ -85,33 +89,65 @@ const PreferenceSelector = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 };
 
 const CreateRoom = () => {
+    const router = useRouter()
+    const { setPreference, setRoomID } = useInviteStore();
+    const [roomId, setRoomId] = useState("");
+
+    const handleCreateRoom = () => {
+        if (roomId.length < 5) return toast.error("Room ID must be atleast 5 digits!");
+
+        setRoomID(roomId);
+        setPreference("Share");
+        router.push(`/room/${roomId}`, { scroll: false });
+    };
+
     return (
-        <>
-            <p className='text-[20px] text-center mb-4'>
+        <div className='h-full flex flex-col justify-between'>
+            <p className='text-[20px] text-center'>
                 Create Room
             </p>
-        </>
+            <div className='flex items-center justify-between'>
+                <div className='w-[40%]'>
+                    Room ID
+                </div>
+                <div className='w-[60%]'>
+                    <input
+                        className='w-full outline-none border rounded-md py-2 px-1 md:px-4 text-center'
+                        value={roomId}
+                        onChange={e => setRoomId(e.target.value)}
+                        placeholder='Example- 12345'
+                    />
+                </div>
+            </div>
+            <div className='flex justify-end items-center'>
+                <button
+                    className='bg-black hover:bg-white text-white hover:text-black duration-200 py-2 px-4 rounded-lg'
+                    onClick={handleCreateRoom}
+                >
+                    Create
+                </button>
+            </div>
+        </div>
     )
 };
 
 const JoinRoom = () => {
     return (
-        <>
-            <p className='text-[20px] text-center mb-4'>
+        <div className='h-full flex flex-col justify-between'>
+            <p className='text-[20px] text-center'>
                 Join Room
             </p>
-        </>
+        </div>
     )
 };
 
 const ShareRoom = () => {
-    const params = useParams();
-    const roomID = params.roomID;
+    const { setPreference, roomID } = useInviteStore();
 
     return (
         <div className='h-full flex flex-col justify-between'>
@@ -129,16 +165,24 @@ const ShareRoom = () => {
                     <BsFillClipboardFill />
                 </div>
             </div>
-            <div className='flex justify-between items-center'>
-                <button className='hover:underline'>
-                    Create Room
-                </button>
-                <button className='hover:underline'>
-                    Join Room
-                </button>
-            </div>
+            {roomID ? (
+                <div className='flex justify-between items-center'>
+                    <button className='hover:underline text-[14px]' onClick={() => setPreference("Create")}>
+                        Create new Room
+                    </button>
+                    <button className='hover:underline text-[14px]' onClick={() => setPreference("Join")}>
+                        Join new Room
+                    </button>
+                </div>
+            ) : (
+                <div className='flex justify-end items-center'>
+                    <button className='hover:underline'>
+                        Join Room
+                    </button>
+                </div>
+            )}
         </div>
     )
-}
+};
 
 export default Invite

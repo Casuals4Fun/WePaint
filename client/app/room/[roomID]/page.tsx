@@ -7,17 +7,21 @@ import Navbar from '@/components/Navbar';
 import RoomCanvas from '@/components/RoomCanvas';
 import Footer from '@/components/Footer';
 import { useEffect } from 'react';
+import { Toaster } from 'react-hot-toast';
 
 const InviteRoom = () => {
     const params = useParams();
     const roomID = params.roomID;
 
     const { theme } = useThemeStore();
-    const { setPreference } = useInviteStore();
+    const { setRoomID, setPreference } = useInviteStore();
     const { height, canvasHeight, isReady } = useWindowHeight();
 
     useEffect(() => {
-        if (roomID) setPreference("Share");
+        if (roomID) {
+            setRoomID(roomID);
+            setPreference("Share");
+        }
     }, [roomID]);
 
     return (
@@ -28,6 +32,12 @@ const InviteRoom = () => {
                 transition: 'opacity 0.5s linear'
             }}
         >
+            <Toaster 
+                toastOptions={{
+                    duration: 5000,
+                    position: 'top-center'
+                }}
+            />
             <Navbar />
             <RoomCanvas canvasHeight={canvasHeight} />
             <Footer />
