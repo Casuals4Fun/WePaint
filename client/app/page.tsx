@@ -5,6 +5,7 @@ import DrawCanvas from '@/components/DrawCanvas';
 import Footer from '@/components/Footer';
 import { useThemeStore } from '@/store';
 import useWindowHeight from '@/utils/useWindowHeight';
+import { Toaster } from 'react-hot-toast';
 
 const Home = () => {
   const { theme } = useThemeStore();
@@ -18,6 +19,12 @@ const Home = () => {
         transition: 'opacity 0.5s linear'
       }}
     >
+      <Toaster
+        toastOptions={{
+          duration: 5000,
+          position: 'top-center'
+        }}
+      />
       <Navbar />
       <DrawCanvas canvasHeight={canvasHeight} />
       <Footer />

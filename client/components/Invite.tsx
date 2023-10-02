@@ -9,6 +9,7 @@ import { GrAdd } from 'react-icons/gr';
 import { GoPeople } from 'react-icons/go';
 import { BsFillClipboardFill } from 'react-icons/bs';
 import { toast } from 'react-hot-toast';
+import { BarLoader } from 'react-spinners';
 
 const Invite = () => {
     const { invite, setInvite, preference, setPreference, roomID } = useInviteStore();
@@ -95,14 +96,16 @@ const PreferenceSelector = () => {
 
 const CreateRoom = () => {
     const router = useRouter()
-    const { setPreference, setRoomID } = useInviteStore();
+    const { setRoomType, setRoomID } = useInviteStore();
     const [roomId, setRoomId] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleCreateRoom = () => {
         if (roomId.length < 5) return toast.error("Room ID must be atleast 5 digits!");
+        setLoading(true);
 
+        setRoomType("Create");
         setRoomID(roomId);
-        setPreference("Share");
         router.push(`/room/${roomId}`, { scroll: false });
     };
 
@@ -126,10 +129,15 @@ const CreateRoom = () => {
             </div>
             <div className='flex justify-end items-center'>
                 <button
-                    className='bg-black hover:bg-white text-white hover:text-black duration-200 py-2 px-4 rounded-lg'
+                    className={`${loading ? "bg-white" : "bg-black hover:bg-white text-white hover:text-black duration-200"} w-[80px] h-[40px] py-2 px-4 rounded-lg`}
                     onClick={handleCreateRoom}
                 >
-                    Create
+                    {loading ? (
+                        <BarLoader
+                            height={4}
+                            width={50}
+                        />
+                    ) : "Create"}
                 </button>
             </div>
         </div>
@@ -137,11 +145,51 @@ const CreateRoom = () => {
 };
 
 const JoinRoom = () => {
+    const router = useRouter()
+    const { setRoomType, setRoomID } = useInviteStore();
+    const [roomId, setRoomId] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const handleJoinRoom = () => {
+        if (!roomId.length) return toast.error("Enter Room ID to proceed!");
+        setLoading(true);
+
+        setRoomType("Join");
+        setRoomID(roomId);
+        router.push(`/room/${roomId}`, { scroll: false });
+    };
+
     return (
         <div className='h-full flex flex-col justify-between'>
             <p className='text-[20px] text-center'>
                 Join Room
             </p>
+            <div className='flex items-center justify-between'>
+                <div className='w-[40%]'>
+                    Room ID
+                </div>
+                <div className='w-[60%]'>
+                    <input
+                        className='w-full outline-none border rounded-md py-2 px-1 md:px-4 text-center'
+                        value={roomId}
+                        onChange={e => setRoomId(e.target.value)}
+                        placeholder='Enter Room ID'
+                    />
+                </div>
+            </div>
+            <div className='flex justify-end items-center'>
+                <button
+                    className={`${loading ? "bg-white" : "bg-black hover:bg-white text-white hover:text-black duration-200"} w-[80px] h-[40px] py-2 px-4 rounded-lg`}
+                    onClick={handleJoinRoom}
+                >
+                    {loading ? (
+                        <BarLoader
+                            height={4}
+                            width={50}
+                        />
+                    ) : "Join"}
+                </button>
+            </div>
         </div>
     )
 };

@@ -5,6 +5,7 @@ import { useThemeStore, useInviteStore } from '@/store';
 import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { Toaster } from 'react-hot-toast';
 
 const Room = () => {
     const { theme } = useThemeStore();
@@ -23,6 +24,12 @@ const Room = () => {
                 transition: 'opacity 0.5s linear'
             }}
         >
+            <Toaster
+                toastOptions={{
+                    duration: 5000,
+                    position: 'top-center'
+                }}
+            />
             <Navbar />
             <Footer />
         </div>

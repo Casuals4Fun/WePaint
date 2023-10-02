@@ -48,6 +48,8 @@ type SocketState = {
 }
 
 type InviteState = {
+    roomType: string,
+    setRoomType: Dispatch<SetStateAction<string>>,
     invite: boolean,
     setInvite: Dispatch<SetStateAction<boolean>>,
     preference: string, 

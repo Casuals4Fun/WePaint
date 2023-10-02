@@ -7,14 +7,14 @@ import Navbar from '@/components/Navbar';
 import RoomCanvas from '@/components/RoomCanvas';
 import Footer from '@/components/Footer';
 import { useEffect } from 'react';
-import { Toaster } from 'react-hot-toast';
+import { Toaster, toast } from 'react-hot-toast';
 
 const InviteRoom = () => {
     const params = useParams();
     const roomID = params.roomID;
 
     const { theme } = useThemeStore();
-    const { setRoomID, setPreference } = useInviteStore();
+    const { roomType, setRoomID, setPreference, setInvite } = useInviteStore();
     const { height, canvasHeight, isReady } = useWindowHeight();
 
     useEffect(() => {
@@ -24,6 +24,17 @@ const InviteRoom = () => {
         }
     }, [roomID]);
 
+    useEffect(() => {
+        if (roomType === "Create") {
+            toast.success("Room created!");
+            setInvite(true);
+        }
+        else if (roomType === "Join") {
+            toast.success("Room joined!");
+            setInvite(false);
+        }
+    }, [roomType]);
+
     return (
         <div className={`overflow-y-hidden relative w-screen flex flex-col items-center justify-between ${theme === "light" ? "bg-white" : "bg-black"}`}
             style={{
@@ -32,7 +43,7 @@ const InviteRoom = () => {
                 transition: 'opacity 0.5s linear'
             }}
         >
-            <Toaster 
+            <Toaster
                 toastOptions={{
                     duration: 5000,
                     position: 'top-center'
