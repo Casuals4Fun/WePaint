@@ -7,7 +7,7 @@ import { IoIosArrowBack } from 'react-icons/io';
 import { AiOutlineClose } from 'react-icons/ai';
 import { GrAdd } from 'react-icons/gr';
 import { GoPeople } from 'react-icons/go';
-import { BsFillClipboardFill } from 'react-icons/bs';
+import { BsFillClipboardCheckFill, BsFillClipboardFill } from 'react-icons/bs';
 import { toast } from 'react-hot-toast';
 import { BarLoader } from 'react-spinners';
 
@@ -116,7 +116,7 @@ const CreateRoom = () => {
             </p>
             <div className='flex items-center justify-between'>
                 <div className='w-[40%]'>
-                    Room ID
+                    Create Room ID
                 </div>
                 <div className='w-[60%]'>
                     <input
@@ -127,6 +127,7 @@ const CreateRoom = () => {
                     />
                 </div>
             </div>
+            <div className='w-full h-[1px] bg-gray-200' />
             <div className='flex justify-end items-center'>
                 <button
                     className={`${loading ? "bg-white" : "bg-black hover:bg-white text-white hover:text-black duration-200"} w-[80px] h-[40px] py-2 px-4 rounded-lg`}
@@ -177,6 +178,7 @@ const JoinRoom = () => {
                     />
                 </div>
             </div>
+            <div className='w-full h-[1px] bg-gray-200' />
             <div className='flex justify-end items-center'>
                 <button
                     className={`${loading ? "bg-white" : "bg-black hover:bg-white text-white hover:text-black duration-200"} w-[80px] h-[40px] py-2 px-4 rounded-lg`}
@@ -197,6 +199,22 @@ const JoinRoom = () => {
 const ShareRoom = () => {
     const { setPreference, roomID } = useInviteStore();
 
+    const [hasCopied, setHasCopied] = useState<boolean>(false);
+    const copyToClipboard = async () => {
+      const url = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/room/${roomID}`;
+      if (!hasCopied) {
+        try {
+          await navigator.clipboard.writeText(url);
+          setHasCopied(true);
+          toast.success("Copied!");
+        } catch (err) {
+          console.error('Failed to copy URL: ', err);
+        }
+      } else {
+        toast("Already Copied!");
+      }
+    };    
+
     return (
         <div className='h-full flex flex-col justify-between'>
             <p className='text-[20px] text-center'>
@@ -206,12 +224,13 @@ const ShareRoom = () => {
                 <div className='w-[90%] text-ellipsis overflow-hidden border-r border-gray-300 py-2'>
                     {`${process.env.NEXT_PUBLIC_FRONTEND_URL}/room/${roomID}`}
                 </div>
-                <div
-                    title='Copy URL'
-                    className='w-[10%] h-full flex items-center justify-center bg-black py-2 text-white duration-200 cursor-pointer group'
+                <button
+                    title={`${hasCopied ? "Copied" : "Copy URL"}`}
+                    className={`w-[10%] h-full flex items-center justify-center py-2 cursor-pointer ${hasCopied ? "bg-gray-200 text-black" : "bg-black text-white"} duration-200`}
+                    onClick={copyToClipboard}
                 >
-                    <BsFillClipboardFill />
-                </div>
+                    {hasCopied ? <BsFillClipboardCheckFill size={20} /> : <BsFillClipboardFill size={20} />}
+                </button>
             </div>
             {roomID ? (
                 <div className='flex justify-between items-center'>
@@ -224,7 +243,7 @@ const ShareRoom = () => {
                 </div>
             ) : (
                 <div className='flex justify-end items-center'>
-                    <button className='hover:underline'>
+                    <button className='hover:underline text-[14px]' onClick={() => setPreference("Join")}>
                         Join Room
                     </button>
                 </div>
