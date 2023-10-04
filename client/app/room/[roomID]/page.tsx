@@ -7,7 +7,7 @@ import Navbar from '@/components/Navbar';
 import RoomCanvas from '@/components/RoomCanvas';
 import Footer from '@/components/Footer';
 import { useEffect } from 'react';
-import { Toaster, toast } from 'react-hot-toast';
+import { Toaster, toast } from 'sonner';
 
 const InviteRoom = () => {
     const params = useParams();
@@ -36,23 +36,24 @@ const InviteRoom = () => {
     }, [roomType]);
 
     return (
-        <div className={`overflow-y-hidden relative w-screen flex flex-col items-center justify-between ${theme === "light" ? "bg-white" : "bg-black"}`}
-            style={{
-                height: `${height}px`,
-                opacity: isReady ? 1 : 0,
-                transition: 'opacity 0.5s linear'
-            }}
-        >
+        <>
             <Toaster
-                toastOptions={{
-                    duration: 5000,
-                    position: 'top-center'
-                }}
+                position='top-center'
+                duration={5000}
+                richColors
             />
-            <Navbar />
-            <RoomCanvas canvasHeight={canvasHeight} />
-            <Footer />
-        </div>
+            <div className={`overflow-y-hidden relative w-screen flex flex-col items-center justify-between ${theme === "light" ? "bg-white" : "bg-black"}`}
+                style={{
+                    height: `${height}px`,
+                    opacity: isReady ? 1 : 0,
+                    transition: 'opacity 0.5s linear'
+                }}
+            >
+                <Navbar />
+                <RoomCanvas canvasHeight={canvasHeight} />
+                <Footer />
+            </div>
+        </>
     )
 };
 

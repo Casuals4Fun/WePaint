@@ -8,7 +8,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { GrAdd } from 'react-icons/gr';
 import { GoPeople } from 'react-icons/go';
 import { BsFillClipboardCheckFill, BsFillClipboardFill } from 'react-icons/bs';
-import { toast } from 'react-hot-toast';
+import { toast } from 'sonner';
 import { BarLoader } from 'react-spinners';
 
 const Invite = () => {

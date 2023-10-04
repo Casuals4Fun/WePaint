@@ -5,7 +5,7 @@ import { useThemeStore, useInviteStore } from '@/store';
 import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from 'sonner';
 
 const Room = () => {
     const { theme } = useThemeStore();
@@ -17,22 +17,23 @@ const Room = () => {
     }, [setInvite]);
 
     return (
-        <div className={`overflow-y-hidden relative w-screen flex flex-col items-center justify-between ${theme === "light" ? "bg-white" : "bg-black"}`}
-            style={{
-                height: `${height}px`,
-                opacity: isReady ? 1 : 0,
-                transition: 'opacity 0.5s linear'
-            }}
-        >
+        <>
             <Toaster
-                toastOptions={{
-                    duration: 5000,
-                    position: 'top-center'
-                }}
+                position='top-center'
+                duration={5000}
+                richColors
             />
-            <Navbar />
-            <Footer />
-        </div>
+            <div className={`overflow-y-hidden relative w-screen flex flex-col items-center justify-between ${theme === "light" ? "bg-white" : "bg-black"}`}
+                style={{
+                    height: `${height}px`,
+                    opacity: isReady ? 1 : 0,
+                    transition: 'opacity 0.5s linear'
+                }}
+            >
+                <Navbar />
+                <Footer />
+            </div>
+        </>
     )
 }
 
