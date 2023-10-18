@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { useDraw } from '@/hooks/useDraw';
-import { useSocketStore, useToolbarStore } from '@/store';
+import { useInviteStore, useSocketStore, useToolbarStore } from '@/store';
 import SaveImage from './SaveImage';
 import { drawLine } from '@/utils/drawLine';
 import { connectSocket } from '@/utils/connectSocket';
@@ -13,6 +13,7 @@ interface HeightProp {
 }
 
 const RoomCanvas = ({ canvasHeight }: HeightProp) => {
+    const { roomID } = useInviteStore();
     const { canvasBg, brushThickness, color, downloadSelect } = useToolbarStore();
     const { setConnected } = useSocketStore();
     const socket = connectSocket(setConnected);
@@ -25,6 +26,8 @@ const RoomCanvas = ({ canvasHeight }: HeightProp) => {
 
     useEffect(() => {
         const ctx = canvasRef.current?.getContext('2d');
+
+        socket.emit('join-room', roomID);
 
         socket.emit('client-ready');
 

@@ -13,26 +13,53 @@ const io = new Server(server, {
     }
 });
 
+let socketRoom = {};
 io.on('connection', socket => {
+    socket.on('join-room', roomID => {
+        socket.join(roomID);
+        socketRoom[socket.id] = roomID;
+    });
+
     socket.on('client-ready', () => {
-        socket.broadcast.emit('get-canvas-state');
+        const roomID = socketRoom[socket.id];
+        if (roomID) {
+            socket.broadcast.to(roomID).emit('get-canvas-state');
+        }
     });
 
     socket.on('canvas-state', (state) => {
-        socket.broadcast.emit('canvas-state-from-server', state);
+        const roomID = socketRoom[socket.id];
+        if (roomID) {
+            socket.broadcast.to(roomID).emit('canvas-state-from-server', state);
+        }
     });
 
     socket.on('draw-line', ({ prevPoint, currPoint, color, brushThickness }) => {
-        socket.broadcast.emit('draw-line', {
-            prevPoint, currPoint, color, brushThickness
-        });
+        const roomID = socketRoom[socket.id];
+        if (roomID) {
+            io.to(roomID).emit('draw-line', {
+                prevPoint, currPoint, color, brushThickness
+            });
+        }
     });
 
     socket.on('background', ({ canvasBg }) => {
-        socket.broadcast.emit('background', { canvasBg });
+        const roomID = socketRoom[socket.id];
+        if (roomID) {
+            socket.broadcast.to(roomID).emit('background', { canvasBg });
+        }
     });
 
-    socket.on('clear', () => io.emit('clear'));
+    socket.on('clear', () => {
+        const roomID = socketRoom[socket.id];
+        if (roomID) {
+            io.to(roomID).emit('clear');
+        }
+    });
+
+    socket.on('disconnect', () => {
+        delete socketRoom[socket.id];
+    });
 });
 
 app.get('/', async (req, res, next) => {
@@ -46,7 +73,7 @@ app.get('/', async (req, res, next) => {
     }
 });
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
     console.log(`Server listening on PORT ${PORT}`);
 });
