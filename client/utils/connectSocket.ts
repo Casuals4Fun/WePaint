@@ -2,7 +2,11 @@ import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
 
 export const connectSocket = (setConnected: Dispatch<SetStateAction<boolean>>) => {
-    const socket = io(process.env.NEXT_PUBLIC_BACKEND_URL!);
+    const socket = io(process.env.NEXT_PUBLIC_BACKEND_URL!, {
+        extraHeaders: {
+            "user-agent": "Mozilla"
+        }
+    });
 
     const socketRef = useRef<Socket>();
     useEffect(() => {
