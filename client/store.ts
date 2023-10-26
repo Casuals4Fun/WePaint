@@ -28,6 +28,8 @@ export const useToolbarStore = create<ToolbarState>((set) => ({
     setOpenCanvasBg: (openCanvasBg: boolean) => set({ openCanvasBg: openCanvasBg }),
     downloadCanvasBg: '#fff',
     setDownloadCanvasBg: (downloadCanvasBg: string) => set({ downloadCanvasBg: downloadCanvasBg }),
+    zoomCanvas: false,
+    setZoomCanvas: (zoomCanvas: boolean) => set({ zoomCanvas: zoomCanvas }),
 }));
 
 export const useSocketStore = create<SocketState>((set) => ({

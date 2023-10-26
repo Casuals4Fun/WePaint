@@ -13,7 +13,7 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className='w-full px-2 md:pt-5 md:px-5 flex items-center md:items-start justify-between'>
+            <nav className='w-full px-2 md:py-1.5 md:px-5 flex items-center justify-between'>
                 <div className={`text-[50px] font-extralight ${theme === "light" ? "text-black" : "text-white"}`}>
                     <MdOutlineDraw />
                 </div>

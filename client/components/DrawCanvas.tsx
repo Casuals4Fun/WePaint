@@ -3,7 +3,7 @@
 import React from 'react';
 import { useDraw } from '@/hooks/useDraw';
 import { useToolbarStore } from '@/store';
-import CanvasToolbar from './RoomToolbar';
+import CanvasToolbar from './CanvasToolbar';
 import SaveImage from './SaveImage';
 
 interface HeightProp {
@@ -11,7 +11,7 @@ interface HeightProp {
 }
 
 const DrawCanvas = ({ canvasHeight }: HeightProp) => {
-    const { canvasBg, brushThickness, color, downloadSelect } = useToolbarStore();
+    const { canvasBg, brushThickness, color, downloadSelect, zoomCanvas } = useToolbarStore();
 
     const { canvasRef, onMouseDown, clear } = useDraw(drawLine);
 
@@ -41,7 +41,7 @@ const DrawCanvas = ({ canvasHeight }: HeightProp) => {
             />
 
             <canvas
-                className={`border-x border-b border-gray-400 md:rounded-3xl cursor-crosshair w-screen md:w-[768px] md:h-[750px]`}
+                className={`border-x border-b border-gray-400 cursor-crosshair w-screen ${zoomCanvas ? "md:h-[calc(100vh-62px-42px)] md:rounded-none" : "md:w-[768px] md:h-[750px] md:rounded-3xl"} transition-all duration-200`}
                 height={`${canvasHeight}px`}
                 ref={canvasRef}
                 onMouseDown={onMouseDown}
