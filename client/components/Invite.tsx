@@ -226,13 +226,13 @@ const ShareRoom = () => {
                     className='w-[125px] h-[125px] md:w-[150px] md:h-[150px] object-contain border-2'
                 />
             </div>
-            <div className='w-full h-[42px] flex border border-gray-300 rounded-md pl-2 overflow-hidden'>
-                <div className='w-[90%] text-ellipsis overflow-hidden border-r border-gray-300 py-2'>
+            <div className='w-full min-h-[42px] flex border border-gray-300 rounded-md pl-2 overflow-hidden'>
+                <div className='w-[90%] min-h-full text-ellipsis overflow-hidden border-r border-gray-300 py-2'>
                     {`${process.env.NEXT_PUBLIC_FRONTEND_URL}/room/${roomID}`}
                 </div>
                 <button
                     title={`${hasCopied ? "Copied" : "Copy URL"}`}
-                    className={`w-[10%] h-full flex items-center justify-center py-2 cursor-pointer ${hasCopied ? "bg-gray-200 text-black" : "bg-black text-white"} duration-200`}
+                    className={`w-[10%] min-h-full flex items-center justify-center py-2 cursor-pointer ${hasCopied ? "bg-gray-200 text-black" : "bg-black text-white"} duration-200`}
                     onClick={copyToClipboard}
                 >
                     {hasCopied ? <BsFillClipboardCheckFill size={20} /> : <BsFillClipboardFill size={20} />}

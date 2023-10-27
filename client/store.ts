@@ -1,5 +1,23 @@
 import { create } from 'zustand'
 
+export const useVistitorStore = create<VisitorState>((set) => ({
+    fetched: false,
+    count: 0,
+    fetchVisitors: async () => {
+        try {
+            await fetch('/api/visits', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    set({ count: data.count });
+                    set({ fetched: true });
+                });
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+}));
+
 export const useThemeStore = create<ThemeState>((set) => ({
     theme: 'dark',
     setTheme: (theme: string) => set({ theme: theme })
