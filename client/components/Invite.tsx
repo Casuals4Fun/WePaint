@@ -22,7 +22,7 @@ const Invite = () => {
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50">
             <div className="bg-black opacity-70 fixed inset-0 z-40"></div>
-            <div className="bg-white w-[95%] md:w-[500px] h-[214px] mx-auto rounded-lg shadow-lg overflow-hidden z-50 relative">
+            <div className={`bg-white w-[95%] md:w-[500px] ${preference !== "Share" ? "h-[214px]" : "min-h-[214px]"} mx-auto rounded-lg shadow-lg overflow-hidden z-50 relative`}>
                 {(preference !== "Share" && preference !== "") && (
                     <button
                         className='absolute left-0 top-0 w-[30px] h-[30px] bg-gray-100 hover:bg-black text-black hover:text-white duration-200 flex items-center justify-center'
@@ -201,26 +201,32 @@ const ShareRoom = () => {
 
     const [hasCopied, setHasCopied] = useState<boolean>(false);
     const copyToClipboard = async () => {
-      const url = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/room/${roomID}`;
-      if (!hasCopied) {
-        try {
-          await navigator.clipboard.writeText(url);
-          setHasCopied(true);
-          toast.success("Copied!");
-        } catch (err) {
-          console.error('Failed to copy URL: ', err);
+        const url = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/room/${roomID}`;
+        if (!hasCopied) {
+            try {
+                await navigator.clipboard.writeText(url);
+                setHasCopied(true);
+                toast.success("Copied!");
+            } catch (err) {
+                console.error('Failed to copy URL: ', err);
+            }
+        } else {
+            toast("Already Copied!");
         }
-      } else {
-        toast("Already Copied!");
-      }
-    };    
+    };
 
     return (
-        <div className='h-full flex flex-col justify-between'>
+        <div className='h-full flex flex-col gap-5 justify-between'>
             <p className='text-[20px] text-center'>
                 Share Invite
             </p>
-            <div className='w-full flex border border-gray-300 rounded-md pl-2 overflow-hidden'>
+            <div className='w-full flex items-center justify-center'>
+                <img
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${process.env.NEXT_PUBLIC_FRONTEND_URL}/room/${roomID}`}
+                    className='w-[125px] h-[125px] md:w-[150px] md:h-[150px] object-contain border-2'
+                />
+            </div>
+            <div className='w-full h-[42px] flex border border-gray-300 rounded-md pl-2 overflow-hidden'>
                 <div className='w-[90%] text-ellipsis overflow-hidden border-r border-gray-300 py-2'>
                     {`${process.env.NEXT_PUBLIC_FRONTEND_URL}/room/${roomID}`}
                 </div>
@@ -232,6 +238,7 @@ const ShareRoom = () => {
                     {hasCopied ? <BsFillClipboardCheckFill size={20} /> : <BsFillClipboardFill size={20} />}
                 </button>
             </div>
+            <div className='w-full h-[1px] bg-gray-200' />
             {roomID ? (
                 <div className='flex justify-between items-center'>
                     <button className='hover:underline text-[14px]' onClick={() => setPreference("Create")}>

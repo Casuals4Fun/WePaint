@@ -31,7 +31,7 @@ const CanvasToolbar = ({ clear }: ToolbarProps) => {
                     <button
                         title='Color Picker'
                         onClick={() => setColorPicker(!colorPicker)}
-                        className='bg-white hover:text-gray-700 duration-200 rounded-full p-2'
+                        className='bg-white hover:scale-[0.8] duration-200 rounded-full p-2'
                     >
                         {colorPicker ? <AiOutlineClose size={22} /> : <PiPaintBrushFill color={color} size={22} />}
                     </button>
@@ -47,7 +47,7 @@ const CanvasToolbar = ({ clear }: ToolbarProps) => {
                     <button
                         title='Background'
                         onClick={() => setBgSelect(!bgSelect)}
-                        className={`bg-white hover:text-gray-700 duration-200 rounded-full p-2`}
+                        className={`bg-white hover:scale-[0.8] duration-200 rounded-full p-2`}
                     >
                         {bgSelect ? <AiOutlineClose size={22} /> : <GrPaint size={22} />}
                     </button>
@@ -63,7 +63,7 @@ const CanvasToolbar = ({ clear }: ToolbarProps) => {
                     <button
                         title='Brush Thickness'
                         onClick={() => setBrushEdit(!brushEdit)}
-                        className='bg-white hover:text-gray-700 duration-200 rounded-full p-2'
+                        className='bg-white hover:scale-[0.8] duration-200 rounded-full p-2'
                     >
                         {brushEdit ? <AiOutlineClose size={22} /> : <PiPencil size={22} />}
                     </button>
@@ -95,21 +95,21 @@ const CanvasToolbar = ({ clear }: ToolbarProps) => {
                 <button
                     title='Erase All'
                     onClick={clear}
-                    className='bg-white hover:text-gray-700 duration-200 rounded-full p-2'
+                    className='bg-white hover:scale-[0.8] duration-200 rounded-full p-2'
                 >
                     <PiEraserFill size={22} />
                 </button>
                 <button
                     title='Save Drawing'
                     onClick={() => setDownloadSelect(!downloadSelect)}
-                    className='bg-white hover:text-gray-700 duration-200 rounded-full p-2'
+                    className='bg-white hover:scale-[0.8] duration-200 rounded-full p-2'
                 >
                     <AiOutlineCloudDownload size={22} />
                 </button>
                 <button
-                    title={`${zoomCanvas ? "Decrease Page Size" : "Increase Page Size"}`}
+                    title={`${zoomCanvas ? "Decrease Slate Size" : "Increase Slate Size"}`}
                     onClick={() => setZoomCanvas(!zoomCanvas)}
-                    className='bg-white hover:text-gray-700 duration-200 rounded-full p-2 hidden md:block'
+                    className='bg-white hover:scale-[0.8] duration-200 rounded-full p-2 hidden md:block'
                 >
                     {zoomCanvas ? <MdOutlineZoomInMap size={22} /> : <MdOutlineZoomOutMap size={22} />}
                 </button>
