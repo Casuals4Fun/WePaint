@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation'
 import { useInviteStore } from '@/store';
 import { IoIosArrowBack } from 'react-icons/io';
@@ -221,9 +222,10 @@ const ShareRoom = () => {
                 Share Invite
             </p>
             <div className='w-full flex items-center justify-center'>
-                <img
+                <Image
                     src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${process.env.NEXT_PUBLIC_FRONTEND_URL}/room/${roomID}`}
                     className='w-[125px] h-[125px] md:w-[150px] md:h-[150px] object-contain border-2'
+                    alt="Share QR"
                 />
             </div>
             <div className='w-full min-h-[42px] flex border border-gray-300 rounded-md pl-2 overflow-hidden'>

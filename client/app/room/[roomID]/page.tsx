@@ -11,7 +11,7 @@ import { Toaster, toast } from 'sonner';
 
 const InviteRoom = () => {
     const params = useParams();
-    const roomID = params.roomID;
+    const roomID = params!.roomID;
 
     const { theme } = useThemeStore();
     const { roomType, setRoomID, setPreference, setInvite } = useInviteStore();
@@ -22,7 +22,7 @@ const InviteRoom = () => {
             setRoomID(roomID);
             setPreference("Share");
         }
-    }, [roomID]);
+    }, [roomID, setRoomID, setPreference]);
 
     useEffect(() => {
         if (roomType === "Create") {
@@ -33,7 +33,7 @@ const InviteRoom = () => {
             toast.success("Room joined!");
             setInvite(false);
         }
-    }, [roomType]);
+    }, [roomType, setInvite]);
 
     return (
         <>

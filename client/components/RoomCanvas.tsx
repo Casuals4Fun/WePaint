@@ -59,7 +59,7 @@ const RoomCanvas = ({ canvasHeight }: HeightProp) => {
             socket.off('draw-line');
             socket.off('clear');
         }
-    }, [canvasRef, socket, clear]);
+    }, [canvasRef, socket, roomID, clear]);
 
     return (
         <div className='relative'>
