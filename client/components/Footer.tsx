@@ -35,7 +35,7 @@ const Footer = () => {
                 <div className='hidden md:block text-[15px]'>
                     Follow me on
                 </div>
-                <a title='GitHub' href='https://github.com/CERTIFIED2003' className='group flex items-center justify-center w-[35px] cursor-pointer' target='_blank'>
+                <a title='GitHub' href='https://github.com/Shubham-Lal' className='group flex items-center justify-center w-[35px] cursor-pointer' target='_blank'>
                     <AiFillGithub
                         className="text-[30px] group-hover:scale-75 transition-all duration-200 w-[35px] h-[30px]"
                     />
