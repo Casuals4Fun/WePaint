@@ -24,12 +24,18 @@ jobs:
           npm install
           npm run build
 
-      - name: Deploy via FTPS
-        uses: SamKirkland/FTP-Deploy-Action@4.3.3
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: client/_next/
-          server-dir: drawing.shubhamlal.in/
-          protocol: ftps
+      - name: Install lftp
+        run: sudo apt install lftp
+
+      - name: Configure lftp
+        run: |
+          mkdir ~/.lftp
+          echo "set ssl:verify-certificate false;" >> ~/.lftp/rc
+
+      - name: Load Secrets
+        run: |
+          echo "machine ${{ secrets.FTP_HOST }} login ${{ secrets.FTP_USERNAME }} password ${{ secrets.FTP_PASSWORD }}" > ~/.netrc
+
+      - name: Upload contents of dist folder
+        run: |
+          lftp -e "mirror --only-newer --parallel=100 -R ./client/_next/ /drawing.shubhamlal.in/" ${{ secrets.FTP_HOST }}
