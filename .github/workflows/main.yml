@@ -1,32 +1,36 @@
-name: Deploy to cPanel
+name: Deploy to FTP
 
 on:
- push:
-  branches:
-    - main
+  push:
+    branches:
+      - main
 
 jobs:
- deploy:
-  runs-on: ubuntu-latest
+  deploy:
+    runs-on: ubuntu-latest
 
-  steps:
-  - name: Checkout code
-    uses: actions/checkout@v2
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-  - name: Setup Node.js environment
-    uses: actions/setup-node@v2
-    with:
-      node-version: '18'
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.21.2
 
-  - name: Install dependencies and build
-    run: |
-      cd client
-      npm install
-      npm run build
+      - name: Install dependencies and build Next.js app
+        run: |
+          cd client
+          npm install
+          npm run build
 
-  - name: Install lftp
-    run: sudo apt install lftp
-
-  - name: Deploy via FTP
-    run: |
-      lftp -e "open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} ${{ secrets.FTP_HOST }}; set ssl:verify-certificate no; mirror -R -e -x .git/ -x .github/ -x .next/ -x node_modules/ . /; bye"
+      - name: Deploy via FTPS
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./
+          server-dir: /
+          protocol: ftps
+          timeout: 300000
