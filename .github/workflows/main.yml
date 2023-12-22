@@ -31,6 +31,6 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: client/_next/
-          server-dir: /
+          server-dir: drawing.shubhamlal.in/
           protocol: ftps
           timeout: 300000
