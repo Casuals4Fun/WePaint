@@ -1,14 +1,13 @@
 "use client"
 
 import React from 'react';
-import { useInviteStore, useThemeStore, useVistitorStore } from '@/store';
+import { useInviteStore, useThemeStore } from '@/store';
 import { MdOutlineDraw } from 'react-icons/md';
 import { FaPeopleGroup } from 'react-icons/fa6';
 import { FiMoon, FiSun } from 'react-icons/fi';
 import Invite from './Invite';
 
 const Navbar = () => {
-    const { fetched, count } = useVistitorStore();
     const { theme, setTheme } = useThemeStore();
     const { invite, setInvite } = useInviteStore();
 
@@ -19,10 +18,6 @@ const Navbar = () => {
                     <MdOutlineDraw />
                 </div>
                 <div className='flex items-center gap-2 md:gap-5'>
-                    <div className={`hidden md:flex items-center justify-center gap-1 w-[80px] ${theme === "light" ? "text-black" : "text-white"}`}>
-                        <span>Visitors:</span>
-                        <span>{fetched ? `${count}` : "..."}</span>
-                    </div>
                     <button
                         className='text-black bg-white hover:bg-gray-300 duration-200 w-[90px] h-[35px] rounded-3xl flex gap-1 items-center justify-center border border-gray-300'
                         onClick={() => setInvite(true)}

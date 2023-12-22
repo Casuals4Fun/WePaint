@@ -223,6 +223,8 @@ const ShareRoom = () => {
             </p>
             <div className='w-full flex items-center justify-center'>
                 <Image
+                    width={150}
+                    height={150}
                     src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${process.env.NEXT_PUBLIC_FRONTEND_URL}/room/${roomID}`}
                     className='w-[125px] h-[125px] md:w-[150px] md:h-[150px] object-contain border-2'
                     alt="Share QR"

@@ -12,12 +12,6 @@ type DrawLineProps = Draw & {
     canvasBg: string,
 };
 
-type VisitorState = {
-    fetched: boolean,
-    count: Number,
-    fetchVisitors: () => Promise<void>
-}
-
 type ThemeState = {
     theme: string,
     setTheme: (theme: string) => void

@@ -1,21 +1,15 @@
 "use client"
 
-import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import DrawCanvas from '@/components/DrawCanvas';
 import Footer from '@/components/Footer';
-import { useThemeStore, useVistitorStore } from '@/store';
+import { useThemeStore } from '@/store';
 import useWindowHeight from '@/utils/useWindowHeight';
 import { Toaster } from 'sonner';
 
 const Home = () => {
-  const { fetchVisitors } = useVistitorStore();
   const { theme } = useThemeStore();
   const { height, canvasHeight, isReady } = useWindowHeight();
-
-  useEffect(() => {
-    fetchVisitors()
-  }, [fetchVisitors]);
 
   return (
     <>
