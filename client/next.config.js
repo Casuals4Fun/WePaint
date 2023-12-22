@@ -7,8 +7,7 @@ const nextConfig = {
                 hostname: 'api.qrserver.com',
             },
         ],
-    },
-    distDir: "_next",
+    }
 }
 
 module.exports = nextConfig

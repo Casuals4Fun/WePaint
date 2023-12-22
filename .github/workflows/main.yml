@@ -36,6 +36,6 @@ jobs:
         run: |
           echo "machine ${{ secrets.FTP_HOST }} login ${{ secrets.FTP_USERNAME }} password ${{ secrets.FTP_PASSWORD }}" > ~/.netrc
 
-      - name: Upload contents of _next folder
+      - name: Upload contents of .next folder
         run: |
-          lftp -e "mirror --only-newer --parallel=100 -R ./client/_next/ /drawing.shubhamlal.in/_next/" ${{ secrets.FTP_HOST }}
+          lftp -e "mirror --only-newer --parallel=100 -R ./client/.next/ /drawing.shubhamlal.in/.next/" ${{ secrets.FTP_HOST }}
