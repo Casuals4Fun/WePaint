@@ -26,4 +26,4 @@ jobs:
 
   - name: Deploy via FTP
     run: |
-      lftp -e "open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} ${{ secrets.FTP_HOST }}; set ssl:verify-certificate no; mirror -R -e -x .git/ -x .github/ -x .next/ -x node_modules/
+      lftp -e "open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} ${{ secrets.FTP_HOST }}; set ssl:verify-certificate no; mirror -R -e -x .git/ -x .github/ -x .next/ -x node_modules/ . /; bye"
