@@ -33,4 +33,3 @@ jobs:
           local-dir: client/_next/
           server-dir: drawing.shubhamlal.in/
           protocol: ftps
-          timeout: 300000
