@@ -15,7 +15,7 @@ const Footer = () => {
         <footer className={`w-full pt-1 pb-1 md:py-1.5 md:px-5 flex items-center md:items-end justify-center md:justify-between gap-3 md:gap-0 ${theme === 'light' ? "text-black" : "text-white"}`}>
             <div className='flex justify-end md:justify-start gap-1 pr-1 text-[15px] md:w-1/3'>
                 <span>Made with ❤️ by </span>
-                <a href='https://shubhamlal.is-a.dev' className='underline' target='_blank'>
+                <a href='https://shubhamlal.in' className='underline' target='_blank'>
                     Shubham Lal
                 </a>
             </div>
