@@ -3,12 +3,12 @@
 import Navbar from '@/components/Navbar';
 import DrawCanvas from '@/components/DrawCanvas';
 import { useThemeStore } from '@/store';
-import useWindowHeight from '@/utils/useWindowHeight';
+import useWindowSize from '@/utils/useWindowSize';
 import { Toaster } from 'sonner';
 
 const Home = () => {
   const { theme } = useThemeStore();
-  const { height, canvasHeight, isReady } = useWindowHeight();
+  const { width, height, isReady } = useWindowSize();
 
   return (
     <>
@@ -25,7 +25,7 @@ const Home = () => {
         }}
       >
         <Navbar />
-        <DrawCanvas canvasHeight={canvasHeight} />
+        <DrawCanvas width={width} height={height} />
       </div>
     </>
   )

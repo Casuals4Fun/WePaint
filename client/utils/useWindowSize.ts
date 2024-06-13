@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 
-const useWindowHeight = () => {
-    const [height, setHeight] = useState<Number>(0);
-    const [canvasHeight, setCanvasHeight] = useState<Number>(0);
+const useWindowSize = () => {
+    const [width, setWidth] = useState<number>(0);
+    const [height, setHeight] = useState<number>(0);
     const [isReady, setIsReady] = useState(false);
 
     useEffect(() => {
         const handleResize = () => {
+            setWidth(window.innerWidth);
             setHeight(window.innerHeight);
-            setCanvasHeight(window.innerHeight-88);
             setIsReady(true);
         };
 
@@ -18,7 +18,7 @@ const useWindowHeight = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    return { height, canvasHeight, isReady };
+    return { width, height, isReady };
 };
 
-export default useWindowHeight;
+export default useWindowSize;

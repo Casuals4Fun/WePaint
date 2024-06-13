@@ -8,11 +8,12 @@ import { drawLine } from '@/utils/drawLine';
 import { connectSocket } from '@/utils/connectSocket';
 import RoomToolbar from './RoomToolbar';
 
-interface HeightProp {
-    canvasHeight: Number
+interface SizeProp {
+    width: number,
+    height: number
 }
 
-const RoomCanvas = ({ canvasHeight }: HeightProp) => {
+const RoomCanvas = ({ width, height }: SizeProp) => {
     const { roomID } = useInviteStore();
     const { canvasBg, brushThickness, color, downloadSelect } = useToolbarStore();
     const { setConnected } = useSocketStore();
@@ -69,8 +70,8 @@ const RoomCanvas = ({ canvasHeight }: HeightProp) => {
 
             <canvas
                 className='cursor-crosshair'
-                width={`${window.innerWidth}px`}
-                height={`${window.innerHeight}px`}
+                width={`${width}px`}
+                height={`${height-50}px`}
                 ref={canvasRef}
                 onMouseDown={onMouseDown}
                 onTouchStart={onMouseDown}

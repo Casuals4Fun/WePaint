@@ -6,11 +6,12 @@ import { useToolbarStore } from '@/store';
 import CanvasToolbar from './CanvasToolbar';
 import SaveImage from './SaveImage';
 
-interface HeightProp {
-    canvasHeight: Number
+interface SizeProp {
+    width: number,
+    height: number
 }
 
-const DrawCanvas = ({ canvasHeight }: HeightProp) => {
+const DrawCanvas = ({ width, height }: SizeProp) => {
     const { canvasBg, brushThickness, color, downloadSelect } = useToolbarStore();
 
     const { canvasRef, onMouseDown, clear } = useDraw(drawLine);
@@ -42,8 +43,8 @@ const DrawCanvas = ({ canvasHeight }: HeightProp) => {
 
             <canvas
                 className='cursor-crosshair'
-                width={`${window.innerWidth}px`}
-                height={`${window.innerHeight}px`}
+                width={`${width}px`}
+                height={`${height-50}px`}
                 ref={canvasRef}
                 onMouseDown={onMouseDown}
                 onTouchStart={onMouseDown}

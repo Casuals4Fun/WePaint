@@ -1,15 +1,14 @@
 "use client"
 
-import useWindowHeight from '@/utils/useWindowHeight';
+import useWindowSize from '@/utils/useWindowSize';
 import { useThemeStore, useInviteStore } from '@/store';
 import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import { Toaster } from 'sonner';
 
 const Room = () => {
     const { theme } = useThemeStore();
-    const { height, isReady } = useWindowHeight();
+    const { height, isReady } = useWindowSize();
     const { setInvite } = useInviteStore();
 
     useEffect(() => {
@@ -31,7 +30,6 @@ const Room = () => {
                 }}
             >
                 <Navbar />
-                <Footer />
             </div>
         </>
     )

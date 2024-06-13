@@ -2,10 +2,9 @@
 
 import { useParams } from 'next/navigation';
 import { useInviteStore, useThemeStore } from '@/store';
-import useWindowHeight from '@/utils/useWindowHeight';
+import useWindowSize from '@/utils/useWindowSize';
 import Navbar from '@/components/Navbar';
 import RoomCanvas from '@/components/RoomCanvas';
-import Footer from '@/components/Footer';
 import { useEffect } from 'react';
 import { Toaster, toast } from 'sonner';
 
@@ -15,7 +14,7 @@ const InviteRoom = () => {
 
     const { theme } = useThemeStore();
     const { roomType, setRoomID, setPreference, setInvite } = useInviteStore();
-    const { height, canvasHeight, isReady } = useWindowHeight();
+    const { width, height, isReady } = useWindowSize();
 
     useEffect(() => {
         if (roomID) {
@@ -50,8 +49,7 @@ const InviteRoom = () => {
                 }}
             >
                 <Navbar />
-                <RoomCanvas canvasHeight={canvasHeight} />
-                <Footer />
+                <RoomCanvas width={width} height={height} />
             </div>
         </>
     )
