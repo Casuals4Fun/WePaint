@@ -2,7 +2,6 @@
 
 import Navbar from '@/components/Navbar';
 import DrawCanvas from '@/components/DrawCanvas';
-import Footer from '@/components/Footer';
 import { useThemeStore } from '@/store';
 import useWindowHeight from '@/utils/useWindowHeight';
 import { Toaster } from 'sonner';
@@ -27,7 +26,6 @@ const Home = () => {
       >
         <Navbar />
         <DrawCanvas canvasHeight={canvasHeight} />
-        <Footer />
       </div>
     </>
   )

@@ -24,8 +24,7 @@ const RoomToolbar = ({ clear }: ToolbarProps) => {
         color, setColor,
         brushEdit, setBrushEdit,
         brushThickness, setBrushThickness,
-        downloadSelect, setDownloadSelect,
-        zoomCanvas, setZoomCanvas
+        downloadSelect, setDownloadSelect
     } = useToolbarStore();
 
     const handleCanvasBg = (e: ColorResult) => {
@@ -40,7 +39,7 @@ const RoomToolbar = ({ clear }: ToolbarProps) => {
     }, [socket, setCanvasBg]);
 
     return (
-        <div className={`absolute top-0 left-0 right-0 flex justify-between p-2 bg-gray-300 border-t border-x border-gray-400 ${zoomCanvas ? "rounded-t-none" : "md:rounded-t-3xl"} transition-all duration-200`}>
+        <div className='absolute top-0 left-0 right-0 flex justify-between p-2 bg-gray-300 border-t border-x border-gray-400'>
             <div className="flex gap-2">
                 <div className='relative'>
                     <button
@@ -120,13 +119,6 @@ const RoomToolbar = ({ clear }: ToolbarProps) => {
                     className='bg-white hover:scale-[0.8] duration-200 rounded-full p-2'
                 >
                     <AiOutlineCloudDownload size={22} />
-                </button>
-                <button
-                    title={`${zoomCanvas ? "Decrease Slate Size" : "Increase Slate Size"}`}
-                    onClick={() => setZoomCanvas(!zoomCanvas)}
-                    className='bg-white hover:scale-[0.8] duration-200 rounded-full p-2 hidden md:block'
-                >
-                    {zoomCanvas ? <MdOutlineZoomInMap size={22} /> : <MdOutlineZoomOutMap size={22} />}
                 </button>
             </div>
         </div>

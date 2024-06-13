@@ -14,7 +14,7 @@ interface HeightProp {
 
 const RoomCanvas = ({ canvasHeight }: HeightProp) => {
     const { roomID } = useInviteStore();
-    const { canvasBg, brushThickness, color, downloadSelect, zoomCanvas } = useToolbarStore();
+    const { canvasBg, brushThickness, color, downloadSelect } = useToolbarStore();
     const { setConnected } = useSocketStore();
     const socket = connectSocket(setConnected);
 
@@ -68,8 +68,9 @@ const RoomCanvas = ({ canvasHeight }: HeightProp) => {
             />
 
             <canvas
-                className={`border-x border-b border-gray-400 cursor-crosshair w-screen ${zoomCanvas ? "md:h-[calc(100vh-62px-42px)] md:rounded-none" : "md:w-[768px] md:h-[750px] md:rounded-3xl"} transition-all duration-200`}
-                height={`${canvasHeight}px`}
+                className='cursor-crosshair'
+                width={`${window.innerWidth}px`}
+                height={`${window.innerHeight}px`}
                 ref={canvasRef}
                 onMouseDown={onMouseDown}
                 onTouchStart={onMouseDown}

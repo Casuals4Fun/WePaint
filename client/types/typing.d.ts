@@ -39,9 +39,7 @@ type ToolbarState = {
     openCanvasBg: boolean,
     setOpenCanvasBg: Dispatch<SetStateAction<boolean>>,
     downloadCanvasBg: string,
-    setDownloadCanvasBg: Dispatch<SetStateAction<string>>,
-    zoomCanvas: boolean,
-    setZoomCanvas: Dispatch<SetStateAction<boolean>>,
+    setDownloadCanvasBg: Dispatch<SetStateAction<string>>
 };
 
 type SocketState = {
