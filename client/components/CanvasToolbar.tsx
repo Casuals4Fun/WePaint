@@ -6,7 +6,6 @@ import { ChromePicker } from 'react-color';
 import { AiOutlineClose, AiOutlineCloudDownload } from 'react-icons/ai';
 import { PiEraserFill, PiPaintBrushFill, PiPencil } from 'react-icons/pi';
 import { GrPaint } from 'react-icons/gr';
-import { MdOutlineZoomOutMap, MdOutlineZoomInMap } from 'react-icons/md';
 
 interface ToolbarProps {
     clear: () => void,
@@ -98,13 +97,13 @@ const CanvasToolbar = ({ clear }: ToolbarProps) => {
                 >
                     <PiEraserFill size={22} />
                 </button>
-                <button
+                {/* <button
                     title='Save Drawing'
                     onClick={() => setDownloadSelect(!downloadSelect)}
                     className='bg-white hover:scale-[0.8] duration-200 rounded-full p-2'
                 >
                     <AiOutlineCloudDownload size={22} />
-                </button>
+                </button> */}
             </div>
         </div>
     )

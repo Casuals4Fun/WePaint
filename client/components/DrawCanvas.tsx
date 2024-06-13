@@ -51,7 +51,7 @@ const DrawCanvas = ({ width, height }: SizeProp) => {
                 style={{ background: canvasBg }}
             />
 
-            {downloadSelect && <SaveImage canvasRef={canvasRef} />}
+            {/* {downloadSelect && <SaveImage canvasRef={canvasRef} />} */}
         </div>
     )
 }
