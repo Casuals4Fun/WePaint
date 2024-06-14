@@ -55,13 +55,6 @@ io.on('connection', socket => {
         }
     });
 
-    socket.on('background', ({ canvasBg }) => {
-        const roomID = socketRoom[socket.id];
-        if (roomID) {
-            socket.broadcast.to(roomID).emit('background', { canvasBg });
-        }
-    });
-
     socket.on('clear', () => {
         const roomID = socketRoom[socket.id];
         if (roomID) {
