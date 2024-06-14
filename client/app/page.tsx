@@ -1,14 +1,14 @@
 "use client"
 
-import Navbar from '@/components/Navbar';
 import DrawCanvas from '@/components/DrawCanvas';
-import { useThemeStore } from '@/store';
+import Invite from '@/components/Invite';
+import { useInviteStore } from '@/store';
 import useWindowSize from '@/utils/useWindowSize';
 import { Toaster } from 'sonner';
 
 const Home = () => {
-  const { theme } = useThemeStore();
-  const { width, height, isReady } = useWindowSize();
+  const { width, height } = useWindowSize();
+  const { invite } = useInviteStore();
 
   return (
     <>
@@ -17,15 +17,9 @@ const Home = () => {
         duration={5000}
         richColors
       />
-      <div className={`overflow-y-hidden relative w-screen flex flex-col items-center justify-between ${theme === "light" ? "bg-white" : "bg-black"}`}
-        style={{
-          height: `${height}px`,
-          opacity: isReady ? 1 : 0,
-          transition: 'opacity 0.5s linear'
-        }}
-      >
-        <Navbar />
+      <div className='overflow-y-hidden relative w-screen flex flex-col items-center justify-between bg-black'>
         <DrawCanvas width={width} height={height} />
+        {invite && <Invite />}
       </div>
     </>
   )

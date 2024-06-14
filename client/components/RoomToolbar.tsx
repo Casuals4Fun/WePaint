@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect } from 'react';
-import { useSocketStore, useToolbarStore } from '@/store';
+import { useInviteStore, useSocketStore, useToolbarStore } from '@/store';
 import { ChromePicker, ColorResult } from 'react-color';
 import { AiOutlineClose, AiOutlineCloudDownload } from 'react-icons/ai';
 import { PiEraserFill, PiPaintBrushFill, PiPencil } from 'react-icons/pi';
@@ -16,6 +16,7 @@ const RoomToolbar = ({ clear }: ToolbarProps) => {
     const { setConnected } = useSocketStore();
     const socket = connectSocket(setConnected);
 
+    const { setInvite } = useInviteStore();
     const {
         bgSelect, setBgSelect,
         canvasBg, setCanvasBg,
@@ -43,7 +44,11 @@ const RoomToolbar = ({ clear }: ToolbarProps) => {
                 <div className='relative'>
                     <button
                         title='Color Picker'
-                        onClick={() => setColorPicker(!colorPicker)}
+                        onClick={() => {
+                            setColorPicker(!colorPicker);
+                            setBgSelect(false);
+                            setBrushEdit(false);
+                        }}
                         className='bg-white hover:scale-[0.8] duration-200 rounded-full p-2'
                     >
                         {colorPicker ? <AiOutlineClose size={22} /> : <PiPaintBrushFill color={color} size={22} />}
@@ -59,7 +64,11 @@ const RoomToolbar = ({ clear }: ToolbarProps) => {
                 <div className='relative'>
                     <button
                         title='Background'
-                        onClick={() => setBgSelect(!bgSelect)}
+                        onClick={() => {
+                            setBgSelect(!bgSelect);
+                            setColorPicker(false);
+                            setBrushEdit(false);
+                        }}
                         className={`bg-white hover:scale-[0.8] duration-200 rounded-full p-2`}
                     >
                         {bgSelect ? <AiOutlineClose size={22} /> : <GrPaint size={22} />}
@@ -75,7 +84,11 @@ const RoomToolbar = ({ clear }: ToolbarProps) => {
                 <div className='relative'>
                     <button
                         title='Brush Thickness'
-                        onClick={() => setBrushEdit(!brushEdit)}
+                        onClick={() => {
+                            setBrushEdit(!brushEdit);
+                            setColorPicker(false);
+                            setBgSelect(false);
+                        }}
                         className='bg-white hover:scale-[0.8] duration-200 rounded-full p-2'
                     >
                         {brushEdit ? <AiOutlineClose size={22} /> : <PiPencil size={22} />}
@@ -103,14 +116,25 @@ const RoomToolbar = ({ clear }: ToolbarProps) => {
                         </div>
                     )}
                 </div>
-            </div>
-            <div className="flex gap-2">
                 <button
                     title='Erase All'
-                    onClick={clear}
+                    onClick={() => {
+                        clear();
+                        setColorPicker(false);
+                        setBgSelect(false);
+                        setBrushEdit(false);
+                    }}
                     className='bg-white hover:scale-[0.8] duration-200 rounded-full p-2'
                 >
                     <PiEraserFill size={22} />
+                </button>
+            </div>
+            <div className="flex gap-2">
+                <button
+                    className='px-4 text-black bg-white hover:bg-black hover:text-white duration-200 rounded-3xl flex gap-1 items-center justify-center'
+                    onClick={() => setInvite(true)}
+                >
+                    <p>Invite</p>
                 </button>
                 {/* <button
                     title='Save Drawing'

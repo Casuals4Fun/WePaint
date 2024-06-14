@@ -44,7 +44,7 @@ const DrawCanvas = ({ width, height }: SizeProp) => {
             <canvas
                 className='cursor-crosshair'
                 width={`${width}px`}
-                height={`${height-50}px`}
+                height={`${height}px`}
                 ref={canvasRef}
                 onMouseDown={onMouseDown}
                 onTouchStart={onMouseDown}

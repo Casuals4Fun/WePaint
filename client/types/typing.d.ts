@@ -12,11 +12,6 @@ type DrawLineProps = Draw & {
     canvasBg: string,
 };
 
-type ThemeState = {
-    theme: string,
-    setTheme: (theme: string) => void
-};
-
 type ToolbarState = {
     bgSelect: boolean,
     setBgSelect: Dispatch<SetStateAction<boolean>>,
