@@ -3,7 +3,7 @@
 import React, { RefObject } from 'react';
 import { useToolbarStore } from '@/store';
 import { downloadDrawing } from '@/utils/downloadDrawing';
-import { ChromePicker } from 'react-color';
+import { HexColorPicker } from 'react-colorful';
 
 interface SaveImageProps {
     canvasRef: RefObject<HTMLCanvasElement>;
@@ -73,9 +73,9 @@ const SaveImage: React.FC<SaveImageProps> = ({ canvasRef }) => {
                         </div>
                         {openCanvasBg && (
                             <div className='flex justify-end pt-2'>
-                                <ChromePicker
+                                <HexColorPicker
                                     color={downloadCanvasBg}
-                                    onChange={e => setDownloadCanvasBg(e.hex)}
+                                    onChange={setDownloadCanvasBg}
                                 />
                             </div>
                         )}

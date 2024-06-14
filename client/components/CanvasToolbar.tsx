@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useInviteStore, useToolbarStore } from '@/store';
-import { ChromePicker } from 'react-color';
+import { HexColorPicker } from 'react-colorful';
 import { AiOutlineClose, AiOutlineCloudDownload } from 'react-icons/ai';
 import { PiEraserFill, PiPaintBrushFill, PiPencil } from 'react-icons/pi';
 import { GrPaint } from 'react-icons/gr';
@@ -34,15 +34,15 @@ const CanvasToolbar = ({ clear }: ToolbarProps) => {
                             setBgSelect(false);
                             setBrushEdit(false);
                         }}
-                        className='bg-white hover:scale-[0.8] duration-200 rounded-full p-2'
+                        className='bg-white active:scale-[0.8] duration-200 rounded-full p-2'
                     >
                         {colorPicker ? <AiOutlineClose size={22} /> : <PiPaintBrushFill color={color} size={22} />}
                     </button>
                     {colorPicker && (
-                        <ChromePicker
+                        <HexColorPicker
                             color={color}
-                            onChange={e => setColor(e.hex)}
-                            className='absolute top-10 left-0'
+                            onChange={setColor}
+                            className='!absolute top-10 left-0'
                         />
                     )}
                 </div>
@@ -54,15 +54,15 @@ const CanvasToolbar = ({ clear }: ToolbarProps) => {
                             setColorPicker(false);
                             setBrushEdit(false);
                         }}
-                        className={`bg-white hover:scale-[0.8] duration-200 rounded-full p-2`}
+                        className={`bg-white active:scale-[0.8] duration-200 rounded-full p-2`}
                     >
                         {bgSelect ? <AiOutlineClose size={22} /> : <GrPaint size={22} />}
                     </button>
                     {bgSelect && (
-                        <ChromePicker
+                        <HexColorPicker
                             color={canvasBg}
-                            onChange={e => setCanvasBg(e.hex)}
-                            className='absolute top-10 left-0'
+                            onChange={setCanvasBg}
+                            className='!absolute top-10 left-0'
                         />
                     )}
                 </div>
@@ -74,7 +74,7 @@ const CanvasToolbar = ({ clear }: ToolbarProps) => {
                             setColorPicker(false);
                             setBgSelect(false);
                         }}
-                        className='bg-white hover:scale-[0.8] duration-200 rounded-full p-2'
+                        className='bg-white active:scale-[0.8] duration-200 rounded-full p-2'
                     >
                         {brushEdit ? <AiOutlineClose size={22} /> : <PiPencil size={22} />}
                     </button>
@@ -109,7 +109,7 @@ const CanvasToolbar = ({ clear }: ToolbarProps) => {
                         setBgSelect(false);
                         setBrushEdit(false);
                     }}
-                    className='bg-white hover:scale-[0.8] duration-200 rounded-full p-2'
+                    className='bg-white active:scale-[0.8] duration-200 rounded-full p-2'
                 >
                     <PiEraserFill size={22} />
                 </button>

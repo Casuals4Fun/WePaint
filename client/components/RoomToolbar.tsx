@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { useInviteStore, useSocketStore, useToolbarStore } from '@/store';
-import { ChromePicker, ColorResult } from 'react-color';
+import { HexColorPicker } from 'react-colorful';
 import { AiOutlineClose, AiOutlineCloudDownload } from 'react-icons/ai';
 import { PiEraserFill, PiPaintBrushFill, PiPencil } from 'react-icons/pi';
 import { GrPaint } from 'react-icons/gr';
@@ -27,16 +27,9 @@ const RoomToolbar = ({ clear }: ToolbarProps) => {
         downloadSelect, setDownloadSelect
     } = useToolbarStore();
 
-    const handleCanvasBg = (e: ColorResult) => {
-        setCanvasBg(e.hex);
-        socket.emit('background', { canvasBg: e.hex });
+    const handleCanvasBg = (e: string) => {
+        setCanvasBg(e);
     };
-
-    useEffect(() => {
-        socket.on('background', ({ canvasBg }) => {
-            setCanvasBg(canvasBg);
-        });
-    }, [socket, setCanvasBg]);
 
     return (
         <div className='absolute top-0 left-0 right-0 flex justify-between p-2 bg-gray-300 border-t border-x border-gray-400'>
@@ -54,10 +47,10 @@ const RoomToolbar = ({ clear }: ToolbarProps) => {
                         {colorPicker ? <AiOutlineClose size={22} /> : <PiPaintBrushFill color={color} size={22} />}
                     </button>
                     {colorPicker && (
-                        <ChromePicker
+                        <HexColorPicker
                             color={color}
-                            onChange={e => setColor(e.hex)}
-                            className='absolute top-10 left-0'
+                            onChange={setColor}
+                            className='!absolute top-10 left-0'
                         />
                     )}
                 </div>
@@ -74,10 +67,10 @@ const RoomToolbar = ({ clear }: ToolbarProps) => {
                         {bgSelect ? <AiOutlineClose size={22} /> : <GrPaint size={22} />}
                     </button>
                     {bgSelect && (
-                        <ChromePicker
+                        <HexColorPicker
                             color={canvasBg}
-                            onChange={e => handleCanvasBg(e)}
-                            className='absolute top-10 left-0'
+                            onChange={handleCanvasBg}
+                            className='!absolute top-10 left-0'
                         />
                     )}
                 </div>
