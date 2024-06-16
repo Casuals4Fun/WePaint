@@ -64,7 +64,10 @@ const RoomCanvas = ({ canvasHeight }: HeightProp) => {
     return (
         <div className='relative'>
             <RoomToolbar
-                clear={() => socket.emit('clear')}
+                clear={() => {
+                    clear();
+                    socket.emit('clear');
+                }}
             />
 
             <canvas
