@@ -4,7 +4,7 @@ import React from 'react';
 import { useInviteStore, useToolbarStore } from '@/store';
 import { HexColorPicker } from 'react-colorful';
 import { AiOutlineClose, AiOutlineCloudDownload } from 'react-icons/ai';
-import { PiEraserFill, PiPaintBrushFill, PiPencil } from 'react-icons/pi';
+import { PiEraserFill, PiPaintBrushFill, PiPencil, PiShareNetworkFill } from 'react-icons/pi';
 import { GrPaint } from 'react-icons/gr';
 
 interface ToolbarProps {
@@ -66,7 +66,7 @@ const CanvasToolbar = ({ clear }: ToolbarProps) => {
                         />
                     )}
                 </div>
-                <div className='relative'>
+                {/* <div className='relative'>
                     <button
                         title='Brush Thickness'
                         onClick={() => {
@@ -100,7 +100,7 @@ const CanvasToolbar = ({ clear }: ToolbarProps) => {
                             </div>
                         </div>
                     )}
-                </div>
+                </div> */}
                 <button
                     title='Erase All'
                     onClick={() => {
@@ -116,10 +116,12 @@ const CanvasToolbar = ({ clear }: ToolbarProps) => {
             </div>
             <div className="flex gap-2">
                 <button
-                    className='px-4 text-black bg-white hover:bg-black hover:text-white duration-200 rounded-3xl flex gap-1 items-center justify-center'
+                    // className='px-4 text-black bg-white hover:bg-black hover:text-white duration-200 rounded-3xl flex gap-1 items-center justify-center'
+                    className='bg-white active:scale-[0.8] duration-200 rounded-full p-2'
                     onClick={() => setInvite(true)}
                 >
-                    <p>Invite</p>
+                    <PiShareNetworkFill size={22} />
+                    {/* <p>Invite</p> */}
                 </button>
                 {/* <button
                     title='Save Drawing'
