@@ -1,12 +1,9 @@
-"use client"
-
 import React from 'react';
 import { useToolbarStore } from '@/store';
 import { ChromePicker } from 'react-color';
 import { AiOutlineClose, AiOutlineCloudDownload } from 'react-icons/ai';
 import { PiEraserFill, PiPaintBrushFill, PiPencil } from 'react-icons/pi';
 import { GrPaint } from 'react-icons/gr';
-import { MdOutlineZoomOutMap, MdOutlineZoomInMap } from 'react-icons/md';
 
 interface ToolbarProps {
     clear: () => void,
@@ -20,12 +17,11 @@ const CanvasToolbar = ({ clear }: ToolbarProps) => {
         color, setColor,
         brushEdit, setBrushEdit,
         brushThickness, setBrushThickness,
-        downloadSelect, setDownloadSelect,
-        zoomCanvas, setZoomCanvas
+        downloadSelect, setDownloadSelect
     } = useToolbarStore();
 
     return (
-        <div className={`absolute top-0 left-0 right-0 flex justify-between p-2 bg-gray-300 border-t border-x border-gray-400 ${zoomCanvas ? "rounded-t-none" : "md:rounded-t-3xl"} transition-all duration-200`}>
+        <div className='absolute top-0 left-0 right-0 flex justify-between p-2 bg-gray-300'>
             <div className="flex gap-2">
                 <div className='relative'>
                     <button
@@ -38,7 +34,7 @@ const CanvasToolbar = ({ clear }: ToolbarProps) => {
                     {colorPicker && (
                         <ChromePicker
                             color={color}
-                            onChange={e => setColor(e.hex)}
+                            onChange={(e: { hex: string; }) => setColor(e.hex)}
                             className='absolute top-10 left-0'
                         />
                     )}
@@ -54,7 +50,7 @@ const CanvasToolbar = ({ clear }: ToolbarProps) => {
                     {bgSelect && (
                         <ChromePicker
                             color={canvasBg}
-                            onChange={e => setCanvasBg(e.hex)}
+                            onChange={(e: { hex: string; }) => setCanvasBg(e.hex)}
                             className='absolute top-10 left-0'
                         />
                     )}
@@ -105,13 +101,6 @@ const CanvasToolbar = ({ clear }: ToolbarProps) => {
                     className='bg-white hover:scale-[0.8] duration-200 rounded-full p-2'
                 >
                     <AiOutlineCloudDownload size={22} />
-                </button>
-                <button
-                    title={`${zoomCanvas ? "Decrease Slate Size" : "Increase Slate Size"}`}
-                    onClick={() => setZoomCanvas(!zoomCanvas)}
-                    className='bg-white hover:scale-[0.8] duration-200 rounded-full p-2 hidden md:block'
-                >
-                    {zoomCanvas ? <MdOutlineZoomInMap size={22} /> : <MdOutlineZoomOutMap size={22} />}
                 </button>
             </div>
         </div>

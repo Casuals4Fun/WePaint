@@ -1,8 +1,6 @@
-"use client"
-
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation'
+import { useRouter, useParams } from 'next/navigation'
 import { useInviteStore } from '@/store';
 import { IoIosArrowBack } from 'react-icons/io';
 import { AiOutlineClose } from 'react-icons/ai';
@@ -13,7 +11,9 @@ import { toast } from 'sonner';
 import { BarLoader } from 'react-spinners';
 
 const Invite = () => {
-    const { invite, setInvite, preference, setPreference, roomID } = useInviteStore();
+    const roomID = useParams().roomID as string;
+
+    const { invite, setInvite, preference, setPreference } = useInviteStore();
     const [showClose, setShowClose] = useState(true);
 
     useEffect(() => {
@@ -97,7 +97,7 @@ const PreferenceSelector = () => {
 
 const CreateRoom = () => {
     const router = useRouter()
-    const { setRoomType, setRoomID } = useInviteStore();
+    const { setRoomType } = useInviteStore();
     const [roomId, setRoomId] = useState("");
     const [loading, setLoading] = useState(false);
 
@@ -106,7 +106,6 @@ const CreateRoom = () => {
         setLoading(true);
 
         setRoomType("Create");
-        setRoomID(roomId);
         router.push(`/room/${roomId}`, { scroll: false });
     };
 
@@ -148,7 +147,7 @@ const CreateRoom = () => {
 
 const JoinRoom = () => {
     const router = useRouter()
-    const { setRoomType, setRoomID } = useInviteStore();
+    const { setRoomType } = useInviteStore();
     const [roomId, setRoomId] = useState("");
     const [loading, setLoading] = useState(false);
 
@@ -157,7 +156,6 @@ const JoinRoom = () => {
         setLoading(true);
 
         setRoomType("Join");
-        setRoomID(roomId);
         router.push(`/room/${roomId}`, { scroll: false });
     };
 
@@ -198,7 +196,9 @@ const JoinRoom = () => {
 };
 
 const ShareRoom = () => {
-    const { setPreference, roomID } = useInviteStore();
+    const roomID = useParams().roomID as string;
+
+    const { setPreference } = useInviteStore();
 
     const [hasCopied, setHasCopied] = useState<boolean>(false);
     const copyToClipboard = async () => {

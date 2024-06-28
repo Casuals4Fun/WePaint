@@ -1,5 +1,3 @@
-"use client"
-
 import React from 'react';
 import { useInviteStore, useThemeStore } from '@/store';
 import { MdOutlineDraw } from 'react-icons/md';
@@ -13,11 +11,11 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className='w-full px-2 md:py-1.5 md:px-5 flex items-center justify-between'>
+            <nav className='w-full px-2 md:px-5 py-1.5 flex items-center justify-between'>
                 <div className={`text-[50px] font-extralight ${theme === "light" ? "text-black" : "text-white"}`}>
                     <MdOutlineDraw />
                 </div>
-                <div className='flex items-center gap-2 md:gap-5'>
+                <div className='flex items-center gap-2'>
                     <button
                         className='text-black bg-white hover:bg-gray-300 duration-200 w-[90px] h-[35px] rounded-3xl flex gap-1 items-center justify-center border border-gray-300'
                         onClick={() => setInvite(true)}
