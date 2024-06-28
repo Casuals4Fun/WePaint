@@ -1,21 +1,14 @@
-"use client"
-
-import React, { useEffect } from 'react';
-import { useInviteStore, useSocketStore, useToolbarStore } from '@/store';
+import { useInviteStore, useToolbarStore } from '@/store';
 import { HexColorPicker } from 'react-colorful';
 import { AiOutlineClose, AiOutlineCloudDownload } from 'react-icons/ai';
 import { PiEraserFill, PiPaintBrushFill, PiPencil, PiShareNetworkFill } from 'react-icons/pi';
 import { GrPaint } from 'react-icons/gr';
-import { connectSocket } from '@/utils/connectSocket';
 
 interface ToolbarProps {
     clear: () => void
 };
 
 const RoomToolbar = ({ clear }: ToolbarProps) => {
-    const { setConnected } = useSocketStore();
-    const socket = connectSocket(setConnected);
-
     const { setInvite } = useInviteStore();
     const {
         bgSelect, setBgSelect,
@@ -124,12 +117,10 @@ const RoomToolbar = ({ clear }: ToolbarProps) => {
             </div>
             <div className="flex gap-2">
                 <button
-                    // className='px-4 text-black bg-white hover:bg-black hover:text-white duration-200 rounded-3xl flex gap-1 items-center justify-center'
                     className='bg-white active:scale-[0.8] duration-200 rounded-full p-2'
                     onClick={() => setInvite(true)}
                 >
                     <PiShareNetworkFill size={22} />
-                    {/* <p>Invite</p> */}
                 </button>
                 {/* <button
                     title='Save Drawing'

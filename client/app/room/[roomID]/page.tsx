@@ -9,18 +9,16 @@ import RoomCanvas from '@/components/RoomCanvas';
 import Invite from '@/components/Invite';
 
 const InviteRoom = () => {
-    const params = useParams();
-    const roomID = params!.roomID;
+    const roomID = useParams().roomID as string;
 
-    const { roomType, setRoomID, setPreference, invite, setInvite } = useInviteStore();
+    const { roomType, setPreference, invite, setInvite } = useInviteStore();
     const { width, height } = useWindowSize();
 
     useEffect(() => {
         if (roomID) {
-            setRoomID(roomID);
             setPreference("Share");
         }
-    }, [roomID, setRoomID, setPreference]);
+    }, [roomID, setPreference]);
 
     useEffect(() => {
         if (roomType === "Create") {
