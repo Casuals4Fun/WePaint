@@ -37,18 +37,11 @@ type ToolbarState = {
     setDownloadCanvasBg: Dispatch<SetStateAction<string>>
 };
 
-type SocketState = {
-    connected: boolean,
-    setConnected: Dispatch<SetStateAction<boolean>>
-}
-
 type InviteState = {
     roomType: string,
     setRoomType: Dispatch<SetStateAction<string>>,
     invite: boolean,
     setInvite: Dispatch<SetStateAction<boolean>>,
     preference: string, 
-    setPreference: Dispatch<SetStateAction<string>>,
-    roomID: string, 
-    setRoomID: Dispatch<SetStateAction<string>>
+    setPreference: Dispatch<SetStateAction<string>>
 };
