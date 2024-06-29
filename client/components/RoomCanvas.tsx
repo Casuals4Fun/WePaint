@@ -18,7 +18,6 @@ const RoomCanvas = ({ width, height }: SizeProp) => {
     const { canvasBg, brushThickness, color, downloadSelect } = useToolbarStore();
 
     const socketRef = useRef(connectSocket());
-    const setupCompleted = useRef(false);
     const joinedRoomRef = useRef(false);
 
     const { canvasRef, onMouseDown, clear } = useDraw(createLine);
@@ -29,8 +28,6 @@ const RoomCanvas = ({ width, height }: SizeProp) => {
 
     useEffect(() => {
         let cleanupFunction = () => { };
-
-        if (setupCompleted.current) return;
 
         const ctx = canvasRef.current?.getContext('2d');
 
@@ -63,11 +60,9 @@ const RoomCanvas = ({ width, height }: SizeProp) => {
 
         socketRef.current.on('clear', clear);
 
-        setupCompleted.current = true;
-
         cleanupFunction = () => {
             socketRef.current.off('join-room');
-            socketRef.current.off('client-ready')
+            socketRef.current.off('client-ready');
             socketRef.current.off('get-canvas-state');
             socketRef.current.off('canvas-state');
             socketRef.current.off('canvas-state-from-server');

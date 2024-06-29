@@ -1,5 +1,3 @@
-"use client"
-
 import React from 'react';
 import { useInviteStore, useToolbarStore } from '@/store';
 import { HexColorPicker } from 'react-colorful';

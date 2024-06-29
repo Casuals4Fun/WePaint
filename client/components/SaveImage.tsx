@@ -1,5 +1,3 @@
-"use client"
-
 import React, { RefObject } from 'react';
 import { useToolbarStore } from '@/store';
 import { downloadDrawing } from '@/utils/downloadDrawing';
