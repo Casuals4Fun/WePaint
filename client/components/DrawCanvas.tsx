@@ -1,10 +1,8 @@
-"use client"
-
 import React from 'react';
 import { useDraw } from '@/hooks/useDraw';
 import { useToolbarStore } from '@/store';
 import CanvasToolbar from './CanvasToolbar';
-import SaveImage from './SaveImage';
+// import SaveImage from './SaveImage';
 
 interface SizeProp {
     width: number,
