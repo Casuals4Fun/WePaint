@@ -1,22 +1,17 @@
-"use client"
-
 import React, { useEffect } from 'react';
-import { useSocketStore, useToolbarStore } from '@/store';
+import { useToolbarStore } from '@/store';
 import { ChromePicker, ColorResult } from 'react-color';
 import { AiOutlineClose, AiOutlineCloudDownload } from 'react-icons/ai';
 import { PiEraserFill, PiPaintBrushFill, PiPencil } from 'react-icons/pi';
 import { GrPaint } from 'react-icons/gr';
-import { MdOutlineZoomOutMap, MdOutlineZoomInMap } from 'react-icons/md';
-import { connectSocket } from '@/utils/connectSocket';
+import { Socket } from 'socket.io-client';
 
 interface ToolbarProps {
+    socketRef: React.MutableRefObject<Socket | null>;
     clear: () => void
 };
 
-const RoomToolbar = ({ clear }: ToolbarProps) => {
-    const { setConnected } = useSocketStore();
-    const socket = connectSocket(setConnected);
-
+const RoomToolbar = ({ socketRef, clear }: ToolbarProps) => {
     const {
         bgSelect, setBgSelect,
         canvasBg, setCanvasBg,
@@ -24,23 +19,22 @@ const RoomToolbar = ({ clear }: ToolbarProps) => {
         color, setColor,
         brushEdit, setBrushEdit,
         brushThickness, setBrushThickness,
-        downloadSelect, setDownloadSelect,
-        zoomCanvas, setZoomCanvas
+        downloadSelect, setDownloadSelect
     } = useToolbarStore();
 
     const handleCanvasBg = (e: ColorResult) => {
         setCanvasBg(e.hex);
-        socket.emit('background', { canvasBg: e.hex });
+        socketRef.current?.emit('background', { canvasBg: e.hex });
     };
 
     useEffect(() => {
-        socket.on('background', ({ canvasBg }) => {
+        socketRef.current?.on('background', ({ canvasBg }) => {
             setCanvasBg(canvasBg);
         });
-    }, [socket, setCanvasBg]);
+    }, []);
 
     return (
-        <div className={`absolute top-0 left-0 right-0 flex justify-between p-2 bg-gray-300 border-t border-x border-gray-400 ${zoomCanvas ? "rounded-t-none" : "md:rounded-t-3xl"} transition-all duration-200`}>
+        <div className='absolute top-0 left-0 right-0 flex justify-between p-2 bg-gray-300'>
             <div className="flex gap-2">
                 <div className='relative'>
                     <button
@@ -120,13 +114,6 @@ const RoomToolbar = ({ clear }: ToolbarProps) => {
                     className='bg-white hover:scale-[0.8] duration-200 rounded-full p-2'
                 >
                     <AiOutlineCloudDownload size={22} />
-                </button>
-                <button
-                    title={`${zoomCanvas ? "Decrease Slate Size" : "Increase Slate Size"}`}
-                    onClick={() => setZoomCanvas(!zoomCanvas)}
-                    className='bg-white hover:scale-[0.8] duration-200 rounded-full p-2 hidden md:block'
-                >
-                    {zoomCanvas ? <MdOutlineZoomInMap size={22} /> : <MdOutlineZoomOutMap size={22} />}
                 </button>
             </div>
         </div>

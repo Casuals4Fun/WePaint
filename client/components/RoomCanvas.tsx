@@ -1,43 +1,54 @@
-"use client"
-
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDraw } from '@/hooks/useDraw';
-import { useInviteStore, useSocketStore, useToolbarStore } from '@/store';
+import { useSocketStore, useToolbarStore } from '@/store';
 import SaveImage from './SaveImage';
 import { drawLine } from '@/utils/drawLine';
 import { connectSocket } from '@/utils/connectSocket';
 import RoomToolbar from './RoomToolbar';
+import { useParams } from 'next/navigation';
 
-interface HeightProp {
-    canvasHeight: Number
+interface SizeProp {
+    width: number,
+    height: number
 }
 
-const RoomCanvas = ({ canvasHeight }: HeightProp) => {
-    const { roomID } = useInviteStore();
-    const { canvasBg, brushThickness, color, downloadSelect, zoomCanvas } = useToolbarStore();
+const RoomCanvas = ({ width, height }: SizeProp) => {
+    const roomID = useParams().roomID as string;
+
+    const { canvasBg, brushThickness, color, downloadSelect } = useToolbarStore();
     const { setConnected } = useSocketStore();
-    const socket = connectSocket(setConnected);
+
+    const socketRef = useRef(connectSocket());
+    const joinedRoomRef = useRef(false);
 
     const { canvasRef, onMouseDown, clear } = useDraw(createLine);
     function createLine({ prevPoint, currPoint, ctx }: Draw) {
-        socket.emit('draw-line', ({ prevPoint, currPoint, color, brushThickness }));
+        socketRef.current.emit('draw-line', ({ prevPoint, currPoint, color, brushThickness }));
         drawLine({ prevPoint, currPoint, ctx, color, brushThickness });
     };
 
     useEffect(() => {
+        let cleanupFunction = () => { };
+
         const ctx = canvasRef.current?.getContext('2d');
 
-        socket.emit('join-room', roomID);
+        socketRef.current.on('connect', () => setConnected(true));
+        socketRef.current.on('disconnect', () => setConnected(false));
 
-        socket.emit('client-ready');
+        if (!joinedRoomRef.current) {
+            socketRef.current.emit('join-room', roomID);
+            joinedRoomRef.current = true;
+        }
 
-        socket.on('get-canvas-state', () => {
+        socketRef.current.emit('client-ready');
+
+        socketRef.current.on('get-canvas-state', () => {
             if (!canvasRef.current?.toDataURL()) return;
 
-            socket.emit('canvas-state', canvasRef.current.toDataURL());
+            socketRef.current.emit('canvas-state', canvasRef.current.toDataURL());
         });
 
-        socket.on('canvas-state-from-server', (state: string) => {
+        socketRef.current.on('canvas-state-from-server', (state: string) => {
             const image = new Image();
             image.src = state;
             image.onload = () => {
@@ -45,34 +56,40 @@ const RoomCanvas = ({ canvasHeight }: HeightProp) => {
             };
         });
 
-        socket.on('draw-line', ({ prevPoint, currPoint, color, brushThickness }: DrawLineProps) => {
+        socketRef.current.on('draw-line', ({ prevPoint, currPoint, color, brushThickness }: DrawLineProps) => {
             if (!ctx) return;
-
             drawLine({ prevPoint, currPoint, ctx, color, brushThickness });
         });
 
-        socket.on('clear', clear);
+        socketRef.current.on('clear', clear);
 
-        return () => {
-            socket.off('get-canvas-state');
-            socket.off('canvas-state-from-server');
-            socket.off('draw-line');
-            socket.off('clear');
+        cleanupFunction = () => {
+            socketRef.current.off('join-room');
+            socketRef.current.off('client-ready')
+            socketRef.current.off('get-canvas-state');
+            socketRef.current.off('canvas-state');
+            socketRef.current.off('canvas-state-from-server');
+            socketRef.current.off('draw-line');
+            socketRef.current.off('clear');
         }
-    }, [canvasRef, socket, roomID, clear]);
+
+        return cleanupFunction;
+    }, []);
 
     return (
         <div className='relative'>
             <RoomToolbar
+                socketRef={socketRef}
                 clear={() => {
                     clear();
-                    socket.emit('clear');
+                    socketRef.current.emit('clear');
                 }}
             />
 
             <canvas
-                className={`border-x border-b border-gray-400 cursor-crosshair w-screen ${zoomCanvas ? "md:h-[calc(100vh-62px-42px)] md:rounded-none" : "md:w-[768px] md:h-[750px] md:rounded-3xl"} transition-all duration-200`}
-                height={`${canvasHeight}px`}
+                className='cursor-crosshair'
+                width={`${width}px`}
+                height={`${height}px`}
                 ref={canvasRef}
                 onMouseDown={onMouseDown}
                 onTouchStart={onMouseDown}

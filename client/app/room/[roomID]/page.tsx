@@ -2,7 +2,7 @@
 
 import { useParams } from 'next/navigation';
 import { useInviteStore, useThemeStore } from '@/store';
-import useWindowHeight from '@/utils/useWindowHeight';
+import useWindowSize from '@/utils/useWindowSize';
 import Navbar from '@/components/Navbar';
 import RoomCanvas from '@/components/RoomCanvas';
 import Footer from '@/components/Footer';
@@ -10,19 +10,17 @@ import { useEffect } from 'react';
 import { Toaster, toast } from 'sonner';
 
 const InviteRoom = () => {
-    const params = useParams();
-    const roomID = params!.roomID;
+    const roomID = useParams().roomID as string;
 
     const { theme } = useThemeStore();
-    const { roomType, setRoomID, setPreference, setInvite } = useInviteStore();
-    const { height, canvasHeight, isReady } = useWindowHeight();
+    const { roomType, setPreference, setInvite } = useInviteStore();
+    const { width, height, canvasHeight, isReady } = useWindowSize();
 
     useEffect(() => {
         if (roomID) {
-            setRoomID(roomID);
             setPreference("Share");
         }
-    }, [roomID, setRoomID, setPreference]);
+    }, [roomID, setPreference]);
 
     useEffect(() => {
         if (roomType === "Create") {
@@ -50,7 +48,7 @@ const InviteRoom = () => {
                 }}
             >
                 <Navbar />
-                <RoomCanvas canvasHeight={canvasHeight} />
+                <RoomCanvas width={width} height={canvasHeight} />
                 <Footer />
             </div>
         </>
