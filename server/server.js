@@ -78,7 +78,8 @@ app.get('/', async (req, res, next) => {
     try {
         res.send({
             status: 201,
-            message: "Drawing API running!"
+            message: "Drawing API running!",
+            socketRoom
         });
     } catch (error) {
         res.send({ message: error });
